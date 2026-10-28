@@ -37,7 +37,7 @@ Read the [installation guide](docs/INSTALLATION.md) for distributed placement, u
 | Authentication | Login, logout, failed login from Zabbix audit data; CIM authentication/change tags |
 | Operations | Trigger events, current problems, acknowledgements/tags, hosts/interfaces/inventory, items, triggers, groups, templates, proxies, maintenance, services, SLA definitions |
 | Other event sources | Discovery hosts/services, autoregistration, internal trigger/item/LLD events |
-| Metrics | Explicitly scoped history types 0â€“4, optional binary history type 5 on 7.0+, closed-hour trends |
+| Metrics | Explicitly scoped history types 0–4, optional binary history type 5 on 7.0+, closed-hour trends |
 | Execution | Zabbix execute audit records, remote-command alert operations, agent/server log extraction, approved script execution with host/script allowlists and separate Splunk capability |
 | Reliability | Bounded time-window splitting, nanosecond-aware history IDs, late-arrival overlap, per-stream atomic checkpoints, bounded retries and response sizes, explicit overflow errors |
 | Dashboards | Operations, audit/authentication, infrastructure, metrics, scripts/agent activity, collector health; instance/time filters |

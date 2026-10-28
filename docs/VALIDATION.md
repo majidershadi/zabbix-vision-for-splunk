@@ -1,6 +1,6 @@
 # Validation evidence
 
-Initial public beta 1.0.0 Ã‚Â· 28 October 2026. Integration tests establish the behavior below; they are not vendor certification.
+Initial public beta 1.0.0 · 28 October 2026. Integration tests establish the behavior below; they are not vendor certification.
 
 ## Live core integration
 

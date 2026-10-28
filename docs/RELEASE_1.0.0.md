@@ -1,6 +1,6 @@
 # Zabbix Vision for Splunk 1.0.0
 
-Initial public beta Ã‚Â· 29 October 2026 Ã‚Â· Apache-2.0 Ã‚Â· App ID `zabbix_vision`
+Initial public beta · 29 October 2026 · Apache-2.0 · App ID `zabbix_vision`
 
 This release brings Zabbix operations, access/change audit and agent command evidence into Splunk with native credential storage and explicit transport controls.
 
