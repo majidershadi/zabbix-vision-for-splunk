@@ -1,0 +1,35 @@
+{
+  "schemaVersion": "2.0.0",
+  "info": {
+    "title": "Zabbix Vision for Splunk",
+    "id": {
+      "name": "zabbix_vision",
+      "version": "1.0.0"
+    },
+    "author": [
+      {
+        "name": "Majid Ershadi"
+      }
+    ],
+    "description": "Secure Zabbix API collection, audit and authentication investigation, infrastructure dashboards and agent command visibility.",
+    "license": {
+      "name": "Apache License 2.0",
+      "text": "LICENSE"
+    },
+    "releaseDate": "2026-10-29",
+    "releaseNotes": {
+      "name": "1.0.0 release notes",
+      "text": "README/RELEASE_1.0.0.md"
+    },
+    "classification": {
+      "developmentStatus": "Beta"
+    }
+  },
+  "supportedDeployments": [
+    "_standalone",
+    "_distributed"
+  ],
+  "targetWorkloads": [
+    "_search_heads"
+  ]
+}

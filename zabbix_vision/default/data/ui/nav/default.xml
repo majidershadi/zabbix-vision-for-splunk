@@ -1,0 +1,14 @@
+<nav search_view="search" color="#c90000">
+  <view name="overview" default="true"/>
+  <view name="security"/>
+  <view name="inventory"/>
+  <view name="metrics"/>
+  <view name="execution"/>
+  <view name="collector"/>
+  <collection label="Administration">
+    <view name="setup"/>
+    <view name="execute"/>
+    <view name="guide"/>
+  </collection>
+  <view name="search"/>
+</nav>

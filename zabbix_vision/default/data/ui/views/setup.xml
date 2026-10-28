@@ -1,0 +1,58 @@
+<dashboard version="1.1" script="setup.js" stylesheet="zabbix.css">
+  <label>Connections &amp; collection</label>
+  <row><panel><html>
+    <div class="zbx-banner"><span class="zbx-eyebrow">ZABBIX VISION / SETUP</span><h2>Connect once. See the whole system.</h2><p>Store your API token in Splunk's credential store, verify the connection, then choose what to collect.</p></div>
+    <div class="zbx-form" id="zbx-setup">
+      <label for="existing">Existing connection</label><select id="existing"><option value="">New connection</option></select>
+      <h3>01 / Connection</h3>
+      <div class="zbx-grid">
+        <div><label for="profile_name">Profile name</label><input id="profile_name" placeholder="production"/><small>Stable instance name, using letters, digits, underscores or hyphens.</small></div>
+        <div><label for="url">Frontend or API URL</label><input id="url" placeholder="https://monitoring.example.com/custom/zabbix"/><small>Root, /zabbix, any custom prefix, or the full api_jsonrpc.php URL.</small></div>
+        <div><label for="token">API token</label><input id="token" type="password" autocomplete="new-password"/><small>Leave empty when editing to keep the stored token. Native $8$ encryption on Splunk 10.6+, $7$ on earlier releases.</small></div>
+        <div><label for="auth_mode">API authentication</label><select id="auth_mode"><option value="auto">Automatic by Zabbix version</option><option value="bearer">Bearer header</option><option value="body">Legacy JSON body (before 7.2 only)</option></select></div>
+      </div>
+      <h3>02 / TLS &amp; transport</h3>
+      <div class="zbx-grid">
+        <div><label for="verify_tls">Certificate verification</label><select id="verify_tls"><option value="true">Verify CA and hostname</option><option value="false">Disable verification (isolated lab)</option></select></div>
+        <div><label for="ca_bundle">Custom CA bundle</label><input id="ca_bundle" placeholder="/opt/splunk/etc/auth/zabbix-ca.pem"/><small>Absolute PEM path on the collection host; blank uses Python system trust.</small></div>
+        <div><label for="client_cert">Client certificate</label><input id="client_cert" placeholder="Absolute PEM path for mutual TLS"/></div>
+        <div><label for="client_key">Client private key</label><input id="client_key" placeholder="Absolute PEM key path"/></div>
+        <div><label for="key_password">Private-key passphrase</label><input id="key_password" type="password" autocomplete="new-password"/><small>Optional; stored separately in Splunk's credential store. Blank retains an existing passphrase.</small></div>
+        <div><label for="tls_min">Minimum TLS version</label><select id="tls_min"><option value="1.2">TLS 1.2</option><option value="1.3">TLS 1.3</option></select></div>
+        <div><label for="proxy_url">HTTP CONNECT proxy</label><input id="proxy_url" placeholder="http://proxy.example.com:3128"/><small>Optional. Embedded proxy credentials are not accepted.</small></div>
+        <div><label for="allow_http">Allow unencrypted HTTP</label><select id="allow_http"><option value="false">No — require HTTPS</option><option value="true">Yes — isolated lab only</option></select></div>
+        <div><label for="timeout">Timeout (seconds)</label><input id="timeout" type="number" value="30" min="1" max="300"/></div>
+        <div><label for="retries">Read retries</label><input id="retries" type="number" value="3" min="0" max="5"/></div>
+        <div><label for="max_response_mb">Maximum response (MiB)</label><input id="max_response_mb" type="number" value="32" min="1" max="256"/></div>
+      </div>
+      <h3>03 / Optional script execution</h3>
+      <p class="zbx-help">Scripts are defined and permissioned in Zabbix. Splunk sends only approved script and host IDs. No arbitrary command entry. Executions are audited and never retried automatically.</p>
+      <div class="zbx-grid">
+        <div><label for="enable_execution">Execution</label><select id="enable_execution"><option value="false">Disabled</option><option value="true">Allow configured IDs</option></select></div>
+        <div><label for="allowed_script_ids">Allowed script IDs</label><input id="allowed_script_ids" placeholder="1,7"/></div>
+        <div><label for="allowed_host_ids">Allowed host IDs</label><input id="allowed_host_ids" placeholder="10084,10085"/></div>
+      </div>
+      <button id="save-profile" type="button">Save connection</button><button id="test-profile" class="secondary" type="button">Test saved connection</button>
+      <div id="connection-result" class="zbx-result" role="status" aria-live="polite">Ready. Secrets are never shown after saving.</div>
+      <h3>04 / Collection input</h3>
+      <p class="zbx-help">Run one active collector per profile and stream scope. Create a separate slower input for inventory or high-volume history. Configure the zabbix_index macro to match your selected indexes.</p>
+      <div class="zbx-grid">
+        <div><label for="input_name">Input name</label><input id="input_name" placeholder="production-events"/></div>
+        <div><label for="index">Destination index</label><input id="index" value="main"/></div>
+        <div><label for="streams">Streams (comma-separated)</label><input id="streams" value="audit,events,problems,hosts,alerts"/><small id="supported-streams"></small></div>
+        <div><label for="interval">Poll interval (seconds)</label><input id="interval" type="number" value="60" min="10"/></div>
+        <div><label for="lookback">Initial lookback (seconds)</label><input id="lookback" type="number" value="3600"/></div>
+        <div><label for="page_size">API page limit</label><input id="page_size" type="number" value="1000"/></div>
+        <div><label for="overlap">Late-arrival overlap (seconds)</label><input id="overlap" type="number" value="120"/></div>
+        <div><label for="settle_delay">Settlement delay (seconds)</label><input id="settle_delay" type="number" value="10"/></div>
+        <div><label for="window">Backfill window per poll (seconds)</label><input id="window" type="number" value="3600"/></div>
+        <div><label for="snapshot_limit">Snapshot row limit</label><input id="snapshot_limit" type="number" value="100000"/></div>
+        <div><label for="item_ids">History / trend item IDs</label><input id="item_ids" placeholder="Required for history and trends"/></div>
+        <div><label for="history_types">History types</label><input id="history_types" value="0,1,2,3,4"/></div>
+        <div><label for="disabled">Input state</label><select id="disabled"><option value="0">Enabled</option><option value="1">Disabled</option></select></div>
+      </div>
+      <button id="save-input" type="button">Save collection input</button>
+      <div id="input-result" class="zbx-result" role="status" aria-live="polite">Inputs run on the Splunk instance where you configure them.</div>
+    </div>
+  </html></panel></row>
+</dashboard>

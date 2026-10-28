@@ -1,0 +1,29 @@
+[]
+access = read : [ * ], write : [ admin ]
+export = none
+
+[props]
+export = system
+
+[transforms]
+export = system
+
+[eventtypes]
+export = system
+
+[tags]
+export = system
+
+[passwords]
+access = read : [ admin ], write : [ admin ]
+export = none
+
+[zabbix_vision_connections]
+access = read : [ admin ], write : [ admin ]
+export = none
+
+[views/setup]
+access = read : [ admin ], write : [ admin ]
+
+[views/execute]
+access = read : [ admin ], write : [ admin ]

@@ -1,0 +1,5 @@
+cryptography
+Pillow
+beautifulsoup4
+Markdown
+# Install splunk-appinspect separately on a supported validation environment.

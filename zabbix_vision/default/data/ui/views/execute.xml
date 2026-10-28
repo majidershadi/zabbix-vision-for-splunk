@@ -1,0 +1,10 @@
+<dashboard version="1.1" script="execute.js" stylesheet="zabbix.css"><label>Run an approved script</label>
+<row><panel><html><div class="zbx-banner"><span class="zbx-eyebrow">ZABBIX VISION / CONTROL</span><h2>Run an approved Zabbix script</h2><p>Execution requires an administrator with the zabbix_execute_scripts capability, enabled connection policy, and matching script and host allowlists.</p></div>
+<div class="zbx-form" id="execute-form"><div class="zbx-grid">
+<div><label for="execution_profile">Connection profile</label><input id="execution_profile"/></div>
+<div><label for="scriptid">Script ID</label><input id="scriptid" inputmode="numeric"/></div>
+<div><label for="hostid">Host ID</label><input id="hostid" inputmode="numeric"/></div>
+<div><label for="confirmation">Type EXECUTE to confirm</label><input id="confirmation" autocomplete="off"/></div>
+</div><p class="zbx-help">The script's Zabbix definition chooses the server, proxy, or agent execution target. A timeout has an unknown outcome: inspect the execution audit before submitting again. Script output is omitted because it can contain secrets.</p>
+<button id="execute-script" type="button">Execute once</button><div id="execution-result" class="zbx-result" role="status" aria-live="polite">No execution requested.</div></div>
+</html></panel></row></dashboard>

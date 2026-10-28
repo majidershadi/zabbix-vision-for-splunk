@@ -1,0 +1,338 @@
+{
+  "modelName": "Zabbix_Operations",
+  "displayName": "Zabbix Operations",
+  "description": "Zabbix Operations",
+  "objectSummary": {},
+  "objects": [
+    {
+      "objectName": "Events",
+      "displayName": "Events",
+      "parentName": "BaseEvent",
+      "lineage": [
+        "Events"
+      ],
+      "fields": [
+        {
+          "fieldName": "instance",
+          "displayName": "Instance",
+          "type": "string",
+          "owner": "Events",
+          "fieldSearch": "instance=*",
+          "required": false,
+          "multivalue": false,
+          "hidden": false,
+          "editable": true,
+          "comment": ""
+        },
+        {
+          "fieldName": "event_uid",
+          "displayName": "Event Uid",
+          "type": "string",
+          "owner": "Events",
+          "fieldSearch": "event_uid=*",
+          "required": false,
+          "multivalue": false,
+          "hidden": false,
+          "editable": true,
+          "comment": ""
+        },
+        {
+          "fieldName": "dataset",
+          "displayName": "Dataset",
+          "type": "string",
+          "owner": "Events",
+          "fieldSearch": "dataset=*",
+          "required": false,
+          "multivalue": false,
+          "hidden": false,
+          "editable": true,
+          "comment": ""
+        },
+        {
+          "fieldName": "status",
+          "displayName": "Status",
+          "type": "string",
+          "owner": "Events",
+          "fieldSearch": "status=*",
+          "required": false,
+          "multivalue": false,
+          "hidden": false,
+          "editable": true,
+          "comment": ""
+        },
+        {
+          "fieldName": "dest",
+          "displayName": "Dest",
+          "type": "string",
+          "owner": "Events",
+          "fieldSearch": "dest=*",
+          "required": false,
+          "multivalue": false,
+          "hidden": false,
+          "editable": true,
+          "comment": ""
+        },
+        {
+          "fieldName": "severity",
+          "displayName": "Severity",
+          "type": "string",
+          "owner": "Events",
+          "fieldSearch": "severity=*",
+          "required": false,
+          "multivalue": false,
+          "hidden": false,
+          "editable": true,
+          "comment": ""
+        },
+        {
+          "fieldName": "eventid",
+          "displayName": "Eventid",
+          "type": "string",
+          "owner": "Events",
+          "fieldSearch": "eventid=*",
+          "required": false,
+          "multivalue": false,
+          "hidden": false,
+          "editable": true,
+          "comment": ""
+        },
+        {
+          "fieldName": "name",
+          "displayName": "Name",
+          "type": "string",
+          "owner": "Events",
+          "fieldSearch": "name=*",
+          "required": false,
+          "multivalue": false,
+          "hidden": false,
+          "editable": true,
+          "comment": ""
+        }
+      ],
+      "constraints": [
+        {
+          "search": "`zabbix_index` sourcetype=zabbix:events",
+          "owner": "Events"
+        }
+      ],
+      "calculations": [],
+      "objectType": "event"
+    },
+    {
+      "objectName": "Collector",
+      "displayName": "Collector",
+      "parentName": "BaseEvent",
+      "lineage": [
+        "Collector"
+      ],
+      "fields": [
+        {
+          "fieldName": "instance",
+          "displayName": "Instance",
+          "type": "string",
+          "owner": "Collector",
+          "fieldSearch": "instance=*",
+          "required": false,
+          "multivalue": false,
+          "hidden": false,
+          "editable": true,
+          "comment": ""
+        },
+        {
+          "fieldName": "stream",
+          "displayName": "Stream",
+          "type": "string",
+          "owner": "Collector",
+          "fieldSearch": "stream=*",
+          "required": false,
+          "multivalue": false,
+          "hidden": false,
+          "editable": true,
+          "comment": ""
+        },
+        {
+          "fieldName": "status",
+          "displayName": "Status",
+          "type": "string",
+          "owner": "Collector",
+          "fieldSearch": "status=*",
+          "required": false,
+          "multivalue": false,
+          "hidden": false,
+          "editable": true,
+          "comment": ""
+        },
+        {
+          "fieldName": "count",
+          "displayName": "Count",
+          "type": "number",
+          "owner": "Collector",
+          "fieldSearch": "count=*",
+          "required": false,
+          "multivalue": false,
+          "hidden": false,
+          "editable": true,
+          "comment": ""
+        },
+        {
+          "fieldName": "lag_seconds",
+          "displayName": "Lag Seconds",
+          "type": "number",
+          "owner": "Collector",
+          "fieldSearch": "lag_seconds=*",
+          "required": false,
+          "multivalue": false,
+          "hidden": false,
+          "editable": true,
+          "comment": ""
+        },
+        {
+          "fieldName": "duration_seconds",
+          "displayName": "Duration Seconds",
+          "type": "number",
+          "owner": "Collector",
+          "fieldSearch": "duration_seconds=*",
+          "required": false,
+          "multivalue": false,
+          "hidden": false,
+          "editable": true,
+          "comment": ""
+        },
+        {
+          "fieldName": "input_name",
+          "displayName": "Input Name",
+          "type": "string",
+          "owner": "Collector",
+          "fieldSearch": "input_name=*",
+          "required": false,
+          "multivalue": false,
+          "hidden": false,
+          "editable": true,
+          "comment": ""
+        }
+      ],
+      "constraints": [
+        {
+          "search": "`zabbix_index` sourcetype=zabbix:collector",
+          "owner": "Collector"
+        }
+      ],
+      "calculations": [],
+      "objectType": "event"
+    },
+    {
+      "objectName": "History",
+      "displayName": "History",
+      "parentName": "BaseEvent",
+      "lineage": [
+        "History"
+      ],
+      "fields": [
+        {
+          "fieldName": "instance",
+          "displayName": "Instance",
+          "type": "string",
+          "owner": "History",
+          "fieldSearch": "instance=*",
+          "required": false,
+          "multivalue": false,
+          "hidden": false,
+          "editable": true,
+          "comment": ""
+        },
+        {
+          "fieldName": "event_uid",
+          "displayName": "Event Uid",
+          "type": "string",
+          "owner": "History",
+          "fieldSearch": "event_uid=*",
+          "required": false,
+          "multivalue": false,
+          "hidden": false,
+          "editable": true,
+          "comment": ""
+        },
+        {
+          "fieldName": "dataset",
+          "displayName": "Dataset",
+          "type": "string",
+          "owner": "History",
+          "fieldSearch": "dataset=*",
+          "required": false,
+          "multivalue": false,
+          "hidden": false,
+          "editable": true,
+          "comment": ""
+        },
+        {
+          "fieldName": "status",
+          "displayName": "Status",
+          "type": "string",
+          "owner": "History",
+          "fieldSearch": "status=*",
+          "required": false,
+          "multivalue": false,
+          "hidden": false,
+          "editable": true,
+          "comment": ""
+        },
+        {
+          "fieldName": "dest",
+          "displayName": "Dest",
+          "type": "string",
+          "owner": "History",
+          "fieldSearch": "dest=*",
+          "required": false,
+          "multivalue": false,
+          "hidden": false,
+          "editable": true,
+          "comment": ""
+        },
+        {
+          "fieldName": "itemid",
+          "displayName": "Itemid",
+          "type": "string",
+          "owner": "History",
+          "fieldSearch": "itemid=*",
+          "required": false,
+          "multivalue": false,
+          "hidden": false,
+          "editable": true,
+          "comment": ""
+        },
+        {
+          "fieldName": "value",
+          "displayName": "Value",
+          "type": "number",
+          "owner": "History",
+          "fieldSearch": "value=*",
+          "required": false,
+          "multivalue": false,
+          "hidden": false,
+          "editable": true,
+          "comment": ""
+        },
+        {
+          "fieldName": "value_type",
+          "displayName": "Value Type",
+          "type": "number",
+          "owner": "History",
+          "fieldSearch": "value_type=*",
+          "required": false,
+          "multivalue": false,
+          "hidden": false,
+          "editable": true,
+          "comment": ""
+        }
+      ],
+      "constraints": [
+        {
+          "search": "`zabbix_index` sourcetype=zabbix:history",
+          "owner": "History"
+        }
+      ],
+      "calculations": [],
+      "objectType": "event"
+    }
+  ]
+}

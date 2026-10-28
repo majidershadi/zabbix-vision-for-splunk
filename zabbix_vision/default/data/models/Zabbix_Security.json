@@ -1,0 +1,260 @@
+{
+  "modelName": "Zabbix_Security",
+  "displayName": "Zabbix Security",
+  "description": "Zabbix Security",
+  "objectSummary": {},
+  "objects": [
+    {
+      "objectName": "Audit",
+      "displayName": "Audit",
+      "parentName": "BaseEvent",
+      "lineage": [
+        "Audit"
+      ],
+      "fields": [
+        {
+          "fieldName": "instance",
+          "displayName": "Instance",
+          "type": "string",
+          "owner": "Audit",
+          "fieldSearch": "instance=*",
+          "required": false,
+          "multivalue": false,
+          "hidden": false,
+          "editable": true,
+          "comment": ""
+        },
+        {
+          "fieldName": "event_uid",
+          "displayName": "Event Uid",
+          "type": "string",
+          "owner": "Audit",
+          "fieldSearch": "event_uid=*",
+          "required": false,
+          "multivalue": false,
+          "hidden": false,
+          "editable": true,
+          "comment": ""
+        },
+        {
+          "fieldName": "dataset",
+          "displayName": "Dataset",
+          "type": "string",
+          "owner": "Audit",
+          "fieldSearch": "dataset=*",
+          "required": false,
+          "multivalue": false,
+          "hidden": false,
+          "editable": true,
+          "comment": ""
+        },
+        {
+          "fieldName": "status",
+          "displayName": "Status",
+          "type": "string",
+          "owner": "Audit",
+          "fieldSearch": "status=*",
+          "required": false,
+          "multivalue": false,
+          "hidden": false,
+          "editable": true,
+          "comment": ""
+        },
+        {
+          "fieldName": "dest",
+          "displayName": "Dest",
+          "type": "string",
+          "owner": "Audit",
+          "fieldSearch": "dest=*",
+          "required": false,
+          "multivalue": false,
+          "hidden": false,
+          "editable": true,
+          "comment": ""
+        },
+        {
+          "fieldName": "action",
+          "displayName": "Action",
+          "type": "string",
+          "owner": "Audit",
+          "fieldSearch": "action=*",
+          "required": false,
+          "multivalue": false,
+          "hidden": false,
+          "editable": true,
+          "comment": ""
+        },
+        {
+          "fieldName": "user",
+          "displayName": "User",
+          "type": "string",
+          "owner": "Audit",
+          "fieldSearch": "user=*",
+          "required": false,
+          "multivalue": false,
+          "hidden": false,
+          "editable": true,
+          "comment": ""
+        },
+        {
+          "fieldName": "src",
+          "displayName": "Src",
+          "type": "string",
+          "owner": "Audit",
+          "fieldSearch": "src=*",
+          "required": false,
+          "multivalue": false,
+          "hidden": false,
+          "editable": true,
+          "comment": ""
+        },
+        {
+          "fieldName": "resource",
+          "displayName": "Resource",
+          "type": "string",
+          "owner": "Audit",
+          "fieldSearch": "resource=*",
+          "required": false,
+          "multivalue": false,
+          "hidden": false,
+          "editable": true,
+          "comment": ""
+        },
+        {
+          "fieldName": "resource_name",
+          "displayName": "Resource Name",
+          "type": "string",
+          "owner": "Audit",
+          "fieldSearch": "resource_name=*",
+          "required": false,
+          "multivalue": false,
+          "hidden": false,
+          "editable": true,
+          "comment": ""
+        },
+        {
+          "fieldName": "category",
+          "displayName": "Category",
+          "type": "string",
+          "owner": "Audit",
+          "fieldSearch": "category=*",
+          "required": false,
+          "multivalue": false,
+          "hidden": false,
+          "editable": true,
+          "comment": ""
+        },
+        {
+          "fieldName": "recordsetid",
+          "displayName": "Recordsetid",
+          "type": "string",
+          "owner": "Audit",
+          "fieldSearch": "recordsetid=*",
+          "required": false,
+          "multivalue": false,
+          "hidden": false,
+          "editable": true,
+          "comment": ""
+        }
+      ],
+      "constraints": [
+        {
+          "search": "`zabbix_index` sourcetype=zabbix:audit",
+          "owner": "Audit"
+        }
+      ],
+      "calculations": [],
+      "objectType": "event"
+    },
+    {
+      "objectName": "Execution",
+      "displayName": "Execution",
+      "parentName": "BaseEvent",
+      "lineage": [
+        "Execution"
+      ],
+      "fields": [
+        {
+          "fieldName": "instance",
+          "displayName": "Instance",
+          "type": "string",
+          "owner": "Execution",
+          "fieldSearch": "instance=*",
+          "required": false,
+          "multivalue": false,
+          "hidden": false,
+          "editable": true,
+          "comment": ""
+        },
+        {
+          "fieldName": "user",
+          "displayName": "User",
+          "type": "string",
+          "owner": "Execution",
+          "fieldSearch": "user=*",
+          "required": false,
+          "multivalue": false,
+          "hidden": false,
+          "editable": true,
+          "comment": ""
+        },
+        {
+          "fieldName": "scriptid",
+          "displayName": "Scriptid",
+          "type": "string",
+          "owner": "Execution",
+          "fieldSearch": "scriptid=*",
+          "required": false,
+          "multivalue": false,
+          "hidden": false,
+          "editable": true,
+          "comment": ""
+        },
+        {
+          "fieldName": "hostid",
+          "displayName": "Hostid",
+          "type": "string",
+          "owner": "Execution",
+          "fieldSearch": "hostid=*",
+          "required": false,
+          "multivalue": false,
+          "hidden": false,
+          "editable": true,
+          "comment": ""
+        },
+        {
+          "fieldName": "status",
+          "displayName": "Status",
+          "type": "string",
+          "owner": "Execution",
+          "fieldSearch": "status=*",
+          "required": false,
+          "multivalue": false,
+          "hidden": false,
+          "editable": true,
+          "comment": ""
+        },
+        {
+          "fieldName": "request_id",
+          "displayName": "Request Id",
+          "type": "string",
+          "owner": "Execution",
+          "fieldSearch": "request_id=*",
+          "required": false,
+          "multivalue": false,
+          "hidden": false,
+          "editable": true,
+          "comment": ""
+        }
+      ],
+      "constraints": [
+        {
+          "search": "`zabbix_index` sourcetype=zabbix:execution",
+          "owner": "Execution"
+        }
+      ],
+      "calculations": [],
+      "objectType": "event"
+    }
+  ]
+}
