@@ -54,6 +54,6 @@ No product telemetry, analytics beacon or vendor-operated backend is included. T
 
 ## Upload preparation
 
-Use the install archive and checksum from the release, not the source ZIP. Verify the version in app.conf and app.manifest. Provide screenshots from the public branded app on a real Splunk installation; existing prototype screenshots are integration evidence and should not be misrepresented as final marketplace screenshots. Confirm the Splunk.com author username, public support contact and any required marketplace agreements in the submission UI. The owner completes legal acceptance and Splunk's review process.
+Use the install archive and checksum from the release, not the source ZIP. Verify the version in app.conf and app.manifest. The real branded screenshot is `docs/screenshots/zabbix-vision-security.png`, captured on Splunk 10.4.1 after checking the public setup endpoint. The older `security.png` records the private prototype and is not final listing media. The release's submission-kit ZIP includes the current guide, listing copy, icons, screenshot, install archive, checksum and inspection report. Confirm the Splunk.com author username, public support contact and any required marketplace agreements in the submission UI. The owner completes legal acceptance and Splunk's review process.
 
 Official process: [Publish apps to Splunkbase](https://dev.splunk.com/enterprise/docs/releaseapps/splunkbase/), [listing information](https://dev.splunk.com/enterprise/docs/releaseapps/splunkbase/submit-splunkbase-apps/configure-app-information/).

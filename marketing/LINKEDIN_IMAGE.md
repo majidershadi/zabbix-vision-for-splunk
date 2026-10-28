@@ -1,5 +1,25 @@
 # LinkedIn image
 
+## Exact generation prompt (built-in image tool)
+
+Use case: ads-marketing.
+Asset type: LinkedIn landscape product launch cover, 1.91:1 wide composition.
+Create a polished editorial engineering graphic for "Zabbix Vision for Splunk", an independent open-source app that brings Zabbix operations, audit/authentication events and agent command evidence into Splunk.
+Warm off-white background, charcoal typography, strong Zabbix red (#D40000) accents and restrained Splunk-inspired green. Premium precision paper sculpture / technical editorial illustration, crisp fine lines, subtle tactile depth.
+Composition: dominant headline with ample whitespace, beneath it a red monitoring-server card connected through a small API collector to three distinct evidence cards: infrastructure pulse, a user access trail, and a terminal command trail. Their lines converge in a composed search lens/eye motif, communicating visibility and investigation. Realistic paper shadows, clean geometry. Concept illustration, not a fabricated dashboard screenshot.
+Text verbatim and only these strings:
+"Zabbix Vision"
+"for Splunk"
+"Operations. Access. Agent activity."
+"Zabbix API"
+"Audit"
+"Agent logs"
+"Search & investigate"
+Small footer "majidershadi.github.io"
+Make headline and exact spellings sharp and readable on a phone. Red is the main accent. Do not add version numbers, certification badges, claims of full process coverage, fake metrics, official partnership marks, AI/Codex/OpenAI/ChatGPT imagery, robots, neon cyberpunk, watermarks, or extra prose. It is an independent product illustration.
+
+## Asset notes
+
 File: `zabbix-vision-linkedin.png`
 
 Generated with the built-in image-generation tool, then copied unchanged into this project. The conceptual cards are a product illustration; agent logs need their own forwarding path, as the article caption states.
