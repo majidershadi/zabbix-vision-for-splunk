@@ -43,3 +43,13 @@ A real nonexistent-user failed login, successful logins and configuration change
 The GitHub release includes the exact install archive and checksum. Review the accompanying AppInspect report/status notes where available; local inspection never substitutes for Splunkbase review. Do not claim marketplace publication or Cloud compatibility until those processes succeed.
 
 For complete process and access coverage, use the additional sources in [COVERAGE.md](COVERAGE.md).
+
+## Publishing-kit checks — 30 October 2026
+
+The private prototype lacked its `static/` icon assets. The six assets from the public release were installed there, and the browser reported a loaded 36-pixel icon. The public `zabbix_vision` icon was separately confirmed loaded. No runtime package change was needed.
+
+Seven current-app screenshots were captured after the icon checks. The disposable Zabbix 7.4 stack had stopped; restarting its existing database, server, frontend and agent restored the saved connection test (7.4.16, hosts and audit accessible). Indexed latest status for the public input showed success for its connection and all 16 selected nonmetric streams, with backfill lag still visible. The operations screenshot predates recovery; each image's context is recorded in the publishing kit.
+
+Lab SSH/Splunk Web subsequently became unreachable during final kit work. No later live refresh or UserParameter/auditd/Sysmon end-to-end test is claimed. The UserParameter guide supplies source-referenced collection/search examples and explicit acceptance steps; it does not change the 1.0.0 runtime.
+
+The dated kit preserves the original install archive, includes a per-file SHA-256 manifest, and supplies full PNG captures plus exact 623 × 350 PNG previews. Local archive integrity, manifest hashes, new documentation/gallery links, image dimensions and app configuration syntax were checked. This media/documentation refresh does not change the existing AppInspect result or confer marketplace approval.

@@ -1,5 +1,7 @@
 # Splunkbase submission materials — 1.0.0
 
+**Updated kit: 30 October 2026.** Start with [the upload checklist](splunkbase/START_HERE.md). The `splunkbase/` directory contains separate copy-ready Details, Installation, Release notes, Troubleshooting, Support/privacy and screenshot-caption files. Seven fresh PNG captures and 623 × 350 PNG previews are under `docs/screenshots/splunkbase/`; open `splunkbase/GALLERY.html` after extracting the dated kit to browse them. Prefer these refreshed screenshots over the older single capture described below. The application archive is unchanged.
+
 Status: prepared for submission; marketplace approval and Cloud certification are not claimed. Run/review AppInspect on the exact upload archive and resolve or document its findings before submitting.
 
 ## Listing fields

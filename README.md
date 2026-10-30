@@ -58,6 +58,9 @@ Read the [installation guide](docs/INSTALLATION.md) for distributed placement, u
 | [Validation evidence](docs/VALIDATION.md) | Actual tests and remaining acceptance gaps |
 | [Release notes](docs/RELEASE_1.0.0.md) | Initial public release scope |
 | [Splunkbase submission copy](SPLUNKBASE.md) | Descriptions, metadata, privacy and compatibility wording |
+| [Splunkbase publishing kit](splunkbase/START_HERE.md) | Copy-ready listing fields, installation, release notes, troubleshooting and upload checklist |
+| [Screenshot gallery and captions](splunkbase/SCREENSHOTS.md) | Seven current lab captures, PNG previews and publication context |
+| [UserParameter execution detection](docs/USERPARAMETER_EXECUTION.md) | Linux auditd and Windows process telemetry, attribution and collection boundaries |
 
 ## Compatibility and evidence
 

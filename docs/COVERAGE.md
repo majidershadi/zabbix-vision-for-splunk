@@ -1,5 +1,7 @@
 # Authentication and agent execution coverage
 
+For concrete OS collection and search examples, read [Detecting UserParameter execution](USERPARAMETER_EXECUTION.md). Version 1.0.0 does not automatically collect or normalize auditd/Sysmon process records into its agent-command panel; those sources require separate forwarding and searches.
+
 | Activity | Collection source | Meaning and limitations |
 | --- | --- | --- |
 | Frontend/API user login, failed login, logout | `auditlog.get`, actions 8/9/4 | Zabbix-recorded authentication events; token usage does not imply a login event per call |

@@ -2,6 +2,9 @@
 
 | Symptom | Check and response |
 | --- | --- |
+| Icon missing / old app name | A `/zabbix_connect/` bookmark opens the private prototype. Open `/zabbix_vision/`. Icons belong in the app's `static/` directory with case-sensitive names; check read permissions and refresh browser/Splunk Web asset caches after repairing files. |
+| Connection initialization failed | Check that Zabbix frontend/server/database services are running, endpoint/port reachability, saved profile and credential access. The generic message can also mean an unavailable endpoint. |
+| Old health error or duplicate rows | Check input name, last_seen and heartbeat age; retired inputs can leave historical status. Prototype/public collectors sharing a scope can duplicate records. Run one active collector per scope and retain indexed history. |
 | Connection version fails | Confirm frontend/API URL and custom prefix, outbound DNS/network, proxy and CA trust. Redirects are intentionally refused. |
 | 7.2+ authentication fails | Use automatic/Bearer mode; preserve Authorization through the reverse proxy. Check token expiry, user status and role method access. |
 | Hosts work, audit denied | Audit requires Zabbix Super admin user type and `auditlog.get` permission. Use a dedicated audit profile if necessary. |
