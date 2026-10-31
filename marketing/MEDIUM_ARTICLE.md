@@ -45,7 +45,7 @@ The release includes operations, audit/authentication, infrastructure inventory,
 
 Two data models support `tstats` for the count and time-series questions that fit it. Raw searches handle structured audit details and latest snapshots. Acceleration is optional and starts disabled so the administrator can choose the index scope and summary storage.
 
-There are nineteen collection streams, including operational events, audit records, current problems, inventory, alert operations, discovery/internal events scoped history/trends and opt-in UserParameter execution history. Metric collection needs explicit item IDs; it is not an invitation to ingest the entire history database by accident. Low-change inventory should run more slowly than event collection.
+There are nineteen collection streams, including operational events, audit records, current problems, inventory, alert operations, discovery/internal events, scoped history/trends and opt-in UserParameter execution history. Metric collection needs explicit item IDs; it is not an invitation to ingest the entire history database by accident. Low-change inventory should run more slowly than event collection.
 
 The collector itself emits stream status and lag. A small health utility can also be exposed through a Zabbix agent UserParameter. Monitoring should be able to tell you when its own bridge has stopped reporting.
 

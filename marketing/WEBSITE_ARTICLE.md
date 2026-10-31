@@ -67,13 +67,13 @@ The last problem you observed is not necessarily the problem that exists now. A 
 
 Snapshots therefore include completion markers, even when they contain no rows. Inventory searches use the latest complete snapshot within the chosen time range. A failed collection does not produce a reassuring empty snapshot.
 
-There are nineteen streams in the release. The API coverage includes audit, trigger events, current problems, hosts, items, triggers, groups, templates, proxies, services, SLA definitions, maintenance, alert operations, discovery, autoregistration, internal events explicitly scoped history/trends and opt-in UserParameter execution history. SLA definitions do not claim to be calculated SLI percentages. Trends exclude the current incomplete hour.
+There are nineteen streams in the release. The API coverage includes audit, trigger events, current problems, hosts, items, triggers, groups, templates, proxies, services, SLA definitions, maintenance, alert operations, discovery, autoregistration, internal events, explicitly scoped history/trends and opt-in UserParameter execution history. SLA definitions do not claim to be calculated SLI percentages. Trends exclude the current incomplete hour.
 
 Use separate input cadences. Low-change inventory can run every five or fifteen minutes, while events need a shorter interval. Metric collection requires item IDs so that enabling a stream does not accidentally ask for every history value in the estate.
 
 ## Data models help the searches that fit them
 
-Two custom models organize the data: `Zabbix_Operations` for events, collector records and history, and `Zabbix_Security` for audit and app execution. Count and time-series panels can use `tstats`; long audit details and latest-snapshot questions use scoped raw searches.
+Two custom models organize the data: `Zabbix_Operations` for events, collector records and history, and `Zabbix_Security` for audit, app execution and UserParameter evidence. Count and time-series panels can use `tstats`; long audit details and latest-snapshot questions use scoped raw searches.
 
 Acceleration is off by default. An administrator can set index scope, estimate storage and enable summaries when appropriate. Dashboard queries use both summarized and unsummarized data, so a new installation can answer searches before summaries complete. There is no claim that every query becomes faster or that acceleration has been benchmarked for every workload.
 
@@ -116,6 +116,6 @@ The public app ID is `zabbix_vision`, renamed from the private prototype for rel
 
 Start with one collector, a dedicated token and a few streams. Set the index macro, test the profile, inspect collector health and compare one known event with Zabbix. Add slower inventory and a small metric scope after that path works. Give audit collection its required permissions deliberately, and keep retention longer than the outage you intend to recover from.
 
-The [release](https://github.com/majidershadi/zabbix-vision-for-splunk/releases/tag/v1.1.0) contains the install archive and checksum. The [repository](https://github.com/majidershadi/zabbix-vision-for-splunk) includes configuration, search, architecture, troubleshooting and coverage guides, plus Splunkbase submission materials. This initial beta is intended for deployment-specific acceptance before wider use.
+The [release](https://github.com/majidershadi/zabbix-vision-for-splunk/releases/tag/v1.1.0) contains the install archive and checksum. The [repository](https://github.com/majidershadi/zabbix-vision-for-splunk) includes configuration, search, architecture, troubleshooting and coverage guides, plus Splunkbase submission materials. This beta is intended for deployment-specific acceptance before wider use.
 
 Related engineering work: [REST Profiler](https://majidershadi.github.io/articles/rest-profiler-1-1/), [VMware Vision](https://github.com/majidershadi/vmware-vision), and [building secure Splunk apps](https://majidershadi.github.io/articles/building-secure-splunk-apps/).
