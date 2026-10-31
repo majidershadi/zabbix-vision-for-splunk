@@ -2,7 +2,7 @@ require(['jquery', 'splunkjs/mvc', 'splunkjs/mvc/simplexml/ready!'], function ($
     'use strict';
     var service = mvc.createService({owner: 'nobody', app: 'zabbix_vision'});
     var profileKeys = ['url','verify_tls','allow_http','ca_bundle','client_cert','client_key','tls_min','proxy_url','timeout','retries','max_response_mb','auth_mode','enable_execution','allowed_script_ids','allowed_host_ids'];
-    var inputKeys = ['streams','index','interval','lookback','page_size','overlap','settle_delay','window','snapshot_limit','item_ids','history_types','disabled'];
+    var inputKeys = ['streams','index','interval','lookback','page_size','overlap','settle_delay','window','snapshot_limit','item_ids','history_types','userparameter_item_ids','disabled'];
     var profiles = [];
     function values(keys) { var out = {}; keys.forEach(function(k) { out[k] = $('#' + k).val(); }); return out; }
     function show(target, data, error) { $(target).text(typeof data === 'string' ? data : JSON.stringify(data,null,2)).toggleClass('error', !!error); }

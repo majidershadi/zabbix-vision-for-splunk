@@ -1,13 +1,13 @@
 # Dashboards, data models and search
 
-Six dashboards cover Operations overview, Audit & authentication, Infrastructure inventory, Metrics & trends, Scripts & agent activity and Collector health. Time and instance selectors apply to API-derived records. Agent log panels use host identity and explicitly do not apply the API instance selector.
+Seven dashboards cover Operations overview, Audit & authentication, Infrastructure inventory, Metrics & trends, Scripts & agent activity Collector health and UserParameter executions. Time and instance selectors apply to API-derived records. Agent log panels use host identity and explicitly do not apply the API instance selector.
 
 ## Models
 
 | Model | Objects | Intended use |
 | --- | --- | --- |
 | Zabbix_Operations | Events, Collector, History | Event counts, collection volume and numeric history |
-| Zabbix_Security | Audit, Execution | Access/change activity and app-requested execution |
+| Zabbix_Security | Audit, Execution, UserParameter | Access/change activity and app-requested execution |
 
 Acceleration is disabled by default. After setting index scope, enable acceleration under Settings → Data models if useful; defaults are seven days for operations and 30 days for security. Estimate summary storage and rebuild summaries after index/field changes. Panels use summaries and unsummarized data, so they work before acceleration completes. No acceleration performance benchmark is claimed.
 
@@ -34,3 +34,7 @@ Acceleration is disabled by default. After setting index scope, enable accelerat
 Use `event_uid` for replay-tolerant counts. Inventory uses complete snapshot markers, including zero-row snapshots, rather than interpreting the last historical problem as a current problem. Choose a time range containing a recent successful snapshot. An inaccessible or failed stream is not an empty healthy snapshot.
 
 The CIM-related Authentication/Change tags are search mappings, not certification of complete Enterprise Security coverage. API-token use is not a login per request. Pair audit records with web/proxy/identity-provider logs when that question matters.
+
+## UserParameter executions (1.1.0)
+
+Use `zabbix:userparameter` and the `zabbix_userparameter_correlation` macro for execution evidence delivered through Zabbix log-item history. The dedicated dashboard reports successes, failures, durations, rejected records and missing/contradictory evidence. Its Security model object is `UserParameter`. See [setup and field semantics](USERPARAMETER_API.md). Rebuild existing Security acceleration summaries after adding the new object.

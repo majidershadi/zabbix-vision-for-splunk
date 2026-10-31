@@ -34,3 +34,14 @@ python3 $SPLUNK_HOME/etc/apps/zabbix_vision/bin/zabbix_health.py --checkpoint-di
 ```
 
 Report issues with app/Splunk/Zabbix versions, stream, sanitized error, expected behavior and a minimal redacted record. Never attach tokens, passwords.conf, splunk.secret, client private keys, session keys or unredacted customer audit history.
+
+## UserParameter execution evidence (1.1.0)
+
+- **No execution records:** install the wrapper or compatible producer first. Numeric item results alone are insufficient. Confirm local JSON lines, active Zabbix log-item history, then the scoped Splunk input, in that order.
+- **Wrapper fails before running:** verify Python/executable paths, root or service-user ownership of the regular configuration file, no group/world write permission, and a service-owned writable log. A copied file can retain the wrong numeric owner. Check the administrator-controlled parent directories too.
+- **Collector rejects item IDs:** select the execution log item's ID, information type Log or Text, with token access to `item.get` and `history.get`. Do not select the numeric check-result ID.
+- **Invalid records:** use the versioned JSON schema. Duplicated JSON fields, oversized records, invalid identifiers or contradictory status/exit code are rejected without retaining the payload.
+- **Start-only rows:** check selected time range, collection lag, Zabbix retention, wrapper timeout and process interruption. Start-only does not prove that a command is still running.
+- **New model fields missing:** rebuild/reconfigure an existing accelerated Security model summary, then rerun the search. Acceleration is off by default.
+
+Full configuration and verification: [UserParameter API guide](https://github.com/majidershadi/zabbix-vision-for-splunk/blob/main/docs/USERPARAMETER_API.md).

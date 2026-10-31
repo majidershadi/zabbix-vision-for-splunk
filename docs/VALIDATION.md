@@ -53,3 +53,15 @@ Seven current-app screenshots were captured after the icon checks. The disposabl
 Lab SSH/Splunk Web subsequently became unreachable during final kit work. No later live refresh or UserParameter/auditd/Sysmon end-to-end test is claimed. The UserParameter guide supplies source-referenced collection/search examples and explicit acceptance steps; it does not change the 1.0.0 runtime.
 
 The dated kit preserves the original install archive, includes a per-file SHA-256 manifest, and supplies full PNG captures plus exact 623 × 350 PNG previews. Local archive integrity, manifest hashes, new documentation/gallery links, image dimensions and app configuration syntax were checked. This media/documentation refresh does not change the existing AppInspect result or confer marketplace approval.
+
+## UserParameter release 1.1.0 — 1 November 2026
+
+The extended suite passed all **48 tests on Linux Python 3.10**, with no skips, including four real TLS handshakes and six wrapper process tests. Coverage includes fixed-command output preservation, nonzero exit, timeout, interruption, unsafe configuration/log rejection, parser payload omission, invalid-record handling, metadata scope validation and checkpoint replay. Windows local checks passed with Linux-only and unavailable-TLS tests skipped; that is not Windows wrapper support.
+
+On Lab 13, the 1.1.0 app was installed over the public app on Splunk Enterprise 10.4.1. A disposable official Zabbix 7.4.16 Agent 2 ran `vision.health` through the wrapper and returned `1`. Its active Log item received real start/end JSON, and the API-history input indexed matching invocation UUIDs with success, exit code 0 and duration. The correlation dashboard displayed start-and-end evidence. All **39 dashboard/selector searches** dispatched without failures, including the new Security-model queries and correlation macro. Acceleration remained off.
+
+The disposable stack and Splunk had stopped during an interruption. They were restarted using the lab's existing runtime-account arrangement; collection backfill was visible. No new execution capability or broad system.run permission was granted. The harmless UserParameter item was reduced to a 60-second cadence. Other Zabbix generations were not retested for this new stream; the earlier core compatibility evidence above remains separate.
+
+The optional wrapper was exercised under Linux and in the disposable Alpine-based agent container with Python 3.14. No independent auditd/Sysmon end-to-end capture, Windows wrapper, flexible argument support, distributed failover or performance benchmark is claimed. See APPINSPECT.md and the matching release report for inspection findings.
+
+The new 1.1.0 screenshot was captured on 1 November in Asia/Tehran; the lab UI displays UTC timestamps on 31 October. It shows 58 successful correlated invocations and zero rejected records in its selected range. The seven earlier screenshots retain their 1.0.0 context in the gallery captions. After backfill, the latest three execution-stream polls reported success with a 10-second lag (the configured settling delay).

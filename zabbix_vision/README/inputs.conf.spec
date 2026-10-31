@@ -2,7 +2,7 @@
 profile = <string>
 * Required connection profile stored in zabbix_vision_connections.conf.
 streams = <comma-separated strings>
-* audit,events,problems,hosts,items,triggers,hostgroups,templates,proxies,services,sla,maintenance,alerts,history,trends,discovery,autoregistration,internal
+* audit,events,problems,hosts,items,triggers,hostgroups,templates,proxies,services,sla,maintenance,alerts,history,trends,discovery,autoregistration,internal,userparameters
 interval = <integer>
 * Polling interval in seconds; minimum 10, default 60.
 index = <string>
@@ -21,6 +21,9 @@ item_ids = <comma-separated IDs>
 * Required for history and trends. Limit to needed items.
 history_types = <comma-separated integers>
 * 0 float, 1 string, 2 log, 3 unsigned, 4 text, 5 binary. Default 0,1,2,3,4.
+userparameter_item_ids = <comma-separated IDs>
+* Required for userparameters. At most 1000 unique Log/Text item IDs with structured execution records.
+* Separate from item_ids. Do not ingest these items as generic history if payload minimization is required.
 snapshot_limit = <integer>
 * Maximum inventory rows. Default 100000. A full result raises an overflow error.
 disabled = <boolean>

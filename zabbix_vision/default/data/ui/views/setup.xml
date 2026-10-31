@@ -49,6 +49,7 @@
         <div><label for="snapshot_limit">Snapshot row limit</label><input id="snapshot_limit" type="number" value="100000"/></div>
         <div><label for="item_ids">History / trend item IDs</label><input id="item_ids" placeholder="Required for history and trends"/></div>
         <div><label for="history_types">History types</label><input id="history_types" value="0,1,2,3,4"/></div>
+        <div><label for="userparameter_item_ids">UserParameter execution log item IDs</label><input id="userparameter_item_ids" placeholder="Required for the userparameters stream"/><small>IDs of dedicated Log/Text items carrying structured execution records, not numeric check-result items. Deploy the optional wrapper or a compatible producer first.</small></div>
         <div><label for="disabled">Input state</label><select id="disabled"><option value="0">Enabled</option><option value="1">Disabled</option></select></div>
       </div>
       <button id="save-input" type="button">Save collection input</button>

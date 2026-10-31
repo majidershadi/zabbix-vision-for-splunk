@@ -8,7 +8,7 @@ The live acceptance environment is Splunk Enterprise 10.4.1. The implementation 
 
 ## Install
 
-1. Download `zabbix_vision-1.0.0.tar.gz` and its SHA-256 file from [GitHub Releases](https://github.com/majidershadi/zabbix-vision-for-splunk/releases/tag/v1.0.0).
+1. Download `zabbix_vision-1.1.0.tar.gz` and its SHA-256 file from [GitHub Releases](https://github.com/majidershadi/zabbix-vision-for-splunk/releases/tag/v1.1.0).
 2. Verify the checksum. The GitHub source ZIP is not the install package.
 3. In Splunk, use **Apps → Manage Apps → Install app from file**. Select the archive and restart Splunk.
 4. Create your destination index, grant the appropriate search roles access, and set the `zabbix_index` macro in `local/macros.conf`. The default is `index=main`.

@@ -4,6 +4,7 @@
   <view name="inventory"/>
   <view name="metrics"/>
   <view name="execution"/>
+  <view name="userparameters"/>
   <view name="collector"/>
   <collection label="Administration">
     <view name="setup"/>

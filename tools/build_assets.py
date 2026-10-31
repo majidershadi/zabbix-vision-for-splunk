@@ -36,6 +36,7 @@ model("Zabbix_Operations", "Zabbix Operations", [
 model("Zabbix_Security", "Zabbix Security", [
     ("Audit", "`zabbix_index` sourcetype=zabbix:audit", dict(common, action="string", user="string", src="string", resource="string", resource_name="string", category="string", recordsetid="string")),
     ("Execution", "`zabbix_index` sourcetype=zabbix:execution", {"instance": "string", "user": "string", "scriptid": "string", "hostid": "string", "status": "string", "request_id": "string"}),
+    ("UserParameter", "`zabbix_index` sourcetype=zabbix:userparameter", dict(common, hostid='string', itemid='string', invocation_id='string', userparameter_key='string', command_id='string', phase='string', parse_status='string', duration_ms='number', exit_code='number')),
 ])
 
 
@@ -98,10 +99,18 @@ page('execution', 'Scripts & agent activity', 'Correlate requested executions, Z
      panel('Executions requested from Splunk', raw + ' sourcetype=zabbix:execution | stats latest(status) AS status min(_time) AS started by instance user scriptid hostid request_id | convert ctime(started)')],
     [panel('Agent command evidence', '`zabbix_events` (sourcetype=zabbix:agent OR sourcetype=zabbix:agent2 OR sourcetype=zabbix:server) command=* | table _time host source command | sort -_time')]
 ], 'Agent records use host identity and are not filtered by the API instance selector. Enable LogRemoteCommands (agent) or Plugins.SystemRun.LogRemoteCommands (agent 2), then forward their logs. UserParameter/plugin child processes also require OS process auditing for complete execution coverage.')
+page('userparameters', 'UserParameter executions', 'Investigate structured execution evidence collected through the Zabbix API.', [
+    [panel('Reported successful completions', '| tstats dc(UserParameter.invocation_id) AS invocations FROM datamodel=Zabbix_Security.UserParameter WHERE UserParameter.instance=$instance|s$ UserParameter.status=success', 'single', single),
+     panel('Reported failures / timeouts', '| tstats dc(UserParameter.invocation_id) AS invocations FROM datamodel=Zabbix_Security.UserParameter WHERE UserParameter.instance=$instance|s$ (UserParameter.status=failure OR UserParameter.status=timeout OR UserParameter.status=spawn_failed OR UserParameter.status=interrupted)', 'single', single),
+     panel('Invalid execution records', '| tstats dc(UserParameter.event_uid) AS records FROM datamodel=Zabbix_Security.UserParameter WHERE UserParameter.instance=$instance|s$ UserParameter.parse_status=invalid', 'single', single)],
+    [panel('Invocation correlation', raw + ' sourcetype=zabbix:userparameter parse_status=valid | `zabbix_userparameter_correlation` | sort -last_seen | convert ctime(last_seen) | table last_seen dest userparameter_key reported_status evidence_state exit_code duration_ms invocation_id')],
+    [panel('Reported completion duration', raw + ' sourcetype=zabbix:userparameter phase=end parse_status=valid | dedup instance hostid itemid invocation_id phase | stats count median(duration_ms) AS median_ms perc95(duration_ms) AS p95_ms by instance dest userparameter_key')],
+    [panel('Rejected records (payload omitted)', raw + ' sourcetype=zabbix:userparameter parse_status=invalid | dedup event_uid | table _time instance dest itemid error')]
+], 'Opt-in: deploy the wrapper or a compatible producer, collect its log with Zabbix, then select userparameters and the log item IDs in Setup. Missing end records are incomplete evidence, not proof of a running process. Command output and arguments are omitted. Evidence is producer-reported; OS auditing is needed for independent descendant-process coverage.')
 page('collector', 'Collector health', 'See API failures, ingestion delay, collection volume, and missing heartbeats.', [
     [panel('Latest stream health', raw + ' sourcetype=zabbix:collector | stats latest(status) AS status latest(error) AS error latest(lag_seconds) AS lag_seconds latest(count) AS rows latest(duration_seconds) AS duration_seconds max(_time) AS last_seen by instance input_name stream | eval heartbeat_age_seconds=now()-last_seen | convert ctime(last_seen)')],
     [panel('Collection volume', '| tstats sum(Collector.count) AS rows FROM datamodel=Zabbix_Operations.Collector WHERE Collector.instance=$instance|s$ BY _time span=15m Collector.stream | rename Collector.stream AS stream | timechart span=15m sum(rows) by stream', 'chart', line),
      panel('Collection delay', raw + ' sourcetype=zabbix:collector | timechart span=15m max(lag_seconds) by instance', 'chart', line)]
 ], 'No heartbeat can mean a disabled input or stopped Splunk. Configure the supplied saved searches and the external Zabbix agent health check. Errors retain the affected checkpoint; other streams continue.')
 
-print('Generated data models and six dashboards.')
+print('Generated data models and seven dashboards.')

@@ -1,6 +1,6 @@
 # Authentication and agent execution coverage
 
-For concrete OS collection and search examples, read [Detecting UserParameter execution](USERPARAMETER_EXECUTION.md). Version 1.0.0 does not automatically collect or normalize auditd/Sysmon process records into its agent-command panel; those sources require separate forwarding and searches.
+Version 1.1.0 adds [UserParameter execution through API history](USERPARAMETER_API.md) when a wrapper or compatible producer first records activity in a Zabbix log item. For independent OS collection and search examples, read [Detecting UserParameter execution](USERPARAMETER_EXECUTION.md). Raw auditd/Sysmon process records require separate forwarding and searches.
 
 | Activity | Collection source | Meaning and limitations |
 | --- | --- | --- |
@@ -11,6 +11,7 @@ For concrete OS collection and search examples, read [Detecting UserParameter ex
 | Commands requested from this app | `zabbix:execution` | Requested and completed/failed-or-unknown records; caller, profile, host/script IDs, correlation UUID |
 | Remote `system.run` on classic agents | `LogRemoteCommands=1` + agent logs | Agent-side command text; failed/disallowed commands and subprocess outcomes may need other logs |
 | Remote `system.run` on agent 2 | `Plugins.SystemRun.LogRemoteCommands=1` + agent logs | Does not log locally invoked HostMetadataItem/HostInterfaceItem/HostnameItem commands |
+| Instrumented fixed UserParameter commands | Wrapper JSON → Zabbix Log/Text item → `history.get` → `zabbix:userparameter` | Start/end, duration and exit status; producer-reported evidence, requires endpoint configuration |
 | UserParameter, plugin and script subprocesses | Linux auditd or Windows Sysmon/Security process creation | Required for complete host-level execution visibility; correlate parent chain to Zabbix service |
 | Frontend HTTP/API request access and proxy denials | Web server / reverse proxy access/error logs | Configure request method/path/status and authenticated user where available; never log Authorization headers |
 | SAML/LDAP/MFA provider decisions | Identity-provider logs | Events not necessarily mirrored in Zabbix audit |

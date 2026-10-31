@@ -9,11 +9,13 @@ Did the agent record it?
 
 I built Zabbix Vision for Splunk to bring those records into the same investigation workflow.
 
-The first public beta includes six dashboards, token-based collection, custom API paths, CA and mutual-TLS controls, native Splunk credential storage, and data models for the searches that benefit from them.
+Version 1.1.0 includes seven dashboards, token-based collection, custom API paths, CA and mutual-TLS controls, native Splunk credential storage, and data models for the searches that benefit from them.
+
+New in 1.1.0: instrumented UserParameter executions can travel through Zabbix log history into Splunk. The optional Linux wrapper records starts, completions, duration and exit status without copying command arguments or output. The dashboard highlights failures and incomplete evidence.
 
 The less visible work took just as much attention: version-aware Zabbix authentication, checkpoints that stop on a potentially truncated second, empty snapshot markers, and collection health you can monitor from Zabbix itself.
 
-Core live testing covered Zabbix 6.0, 7.0 and 7.4 on Splunk Enterprise 10.4.1. The suite has 33 automated tests; all 32 dashboard searches passed in the lab.
+Core live testing covered Zabbix 6.0, 7.0 and 7.4 on Splunk Enterprise 10.4.1. Version 1.1.0 passed 48 Linux tests and 39 live dashboard searches, including the UserParameter log-history path.
 
 One boundary matters: API audit records do not describe every agent process. The guide explains where agent logs, auditd, Sysmon or EDR evidence are needed. I would rather make that gap explicit than turn an empty panel into a claim of complete visibility.
 
@@ -32,7 +34,7 @@ Source, documentation and issues:
 https://github.com/majidershadi/zabbix-vision-for-splunk
 
 Install package and checksum:
-https://github.com/majidershadi/zabbix-vision-for-splunk/releases/tag/v1.0.0
+https://github.com/majidershadi/zabbix-vision-for-splunk/releases/tag/v1.1.0
 
 ## Image
 

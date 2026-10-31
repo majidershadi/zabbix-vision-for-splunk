@@ -1,10 +1,12 @@
 # Screenshots and captions
 
-Captured from **Zabbix Vision for Splunk 1.0.0** on Splunk Enterprise 10.4.1, 30 October 2026, after verifying the red app icon. The old `zabbix_connect` lab prototype had missing icon files; they were restored separately. Every listing image below shows the public `zabbix_vision` interface.
+Images 01–07 were captured from **Zabbix Vision for Splunk 1.0.0** on Splunk Enterprise 10.4.1, 30 October 2026, after verifying the red app icon. The old `zabbix_connect` lab prototype had missing icon files; they were restored separately. Every listing image below shows the public `zabbix_vision` interface.
+
+Image 08 shows **1.1.0**, captured 1 November 2026 (Asia/Tehran); the lab UI displays its UTC date, 31 October. It verifies the loaded red icon and real wrapper → Zabbix log history → Splunk evidence.
 
 These are real disposable-lab screens, not generated UI mockups. The seven-day range includes earlier acceptance tests. No passwords, tokens or private keys are displayed. Browser captures were converted from JPEG to PNG without changing UI content. The 623 × 350 previews are proportional reductions with neutral letterboxing; use the full PNGs where the portal supports larger screenshots.
 
-Open [GALLERY.html](GALLERY.html) after extracting the kit for a local visual index. Recommended upload order: Operations, Audit, Connections/TLS, Agent activity, Collector health, Inventory, Metrics. If the portal limits the image count, prioritize the first five.
+Open [GALLERY.html](GALLERY.html) after extracting the kit for a local visual index. Recommended upload order: Operations, Audit, UserParameter executions, Connections/TLS, Agent activity, Collector health, Inventory, Metrics. If the portal limits the image count, prioritize the first five.
 
 | File | Suggested title / caption | Context to preserve |
 | --- | --- | --- |
@@ -15,6 +17,8 @@ Open [GALLERY.html](GALLERY.html) after extracting the kit for a local visual in
 | [05-collector-health.png](../docs/screenshots/splunkbase/05-collector-health.png) | **Collector health:** inspect stream status and collection volume while tracking backfill delay. | Current public input is shown with successful stream/connection status after stack recovery. Large lag is real backlog after downtime; success does not mean caught up. Table sorted by input name to show the public input first. |
 | [06-connections-tls.png](../docs/screenshots/splunkbase/06-connections-tls.png) | **Connections and TLS:** configure version-aware authentication, custom CA, mutual TLS and native secret storage. | Unsaved new-connection form with placeholders and empty secret fields, showing production-safe defaults. No production connection is implied. The lab acceptance endpoint uses loopback HTTP. |
 | [07-metrics.png](../docs/screenshots/splunkbase/07-metrics.png) | **Metrics & trends:** explore explicitly scoped numeric item history and available hourly aggregates. | Historical small-lab item samples; does not establish broad trend correctness or performance. Text/log history is not populated in this example. |
+
+| [08-userparameter-executions.png](../docs/screenshots/splunkbase/08-userparameter-executions.png) | **UserParameter executions:** correlate instrumented command starts and completions collected through Zabbix API history. | 1.1.0 live Agent 2 test, 58 successful invocations in the selected range; zero failures/rejections. Empty rejected-record panel is expected. Counts include earlier harmless checks. Evidence is producer-reported, not comprehensive OS process auditing. |
 
 ## Image directories
 

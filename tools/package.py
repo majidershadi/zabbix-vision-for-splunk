@@ -1,5 +1,6 @@
 """Build an installable Splunk package containing only the application directory."""
 import hashlib
+import json
 import gzip
 import shutil
 from pathlib import Path
@@ -8,12 +9,18 @@ import tarfile
 root = Path(__file__).resolve().parents[1]
 output = root / "dist"
 output.mkdir(exist_ok=True)
-target = output / "zabbix_vision-1.0.0.tar.gz"
+version = json.loads((root / "zabbix_vision/app.manifest").read_text())["info"]["id"]["version"]
+target = output / ("zabbix_vision-" + version + ".tar.gz")
 docs = root / 'zabbix_vision' / 'README'
 docs.mkdir(exist_ok=True)
 for path in (root / 'docs').glob('*.md'):
     shutil.copyfile(path, docs / path.name)
-(docs / 'OVERVIEW.md').write_text((root / 'README.md').read_text(encoding='utf-8').replace('(docs/', '(').replace('src="docs/assets/', 'src="assets/'),encoding='utf-8')
+overview = (root / 'README.md').read_text(encoding='utf-8')
+overview = overview.replace('(docs/', '(').replace('src="docs/assets/', 'src="assets/')
+overview = overview.replace('(zabbix_vision/examples)', '(../examples)')
+overview = overview.replace('(splunkbase/', '(https://github.com/majidershadi/zabbix-vision-for-splunk/blob/main/splunkbase/')
+overview = overview.replace('(SPLUNKBASE.md)', '(https://github.com/majidershadi/zabbix-vision-for-splunk/blob/main/SPLUNKBASE.md)')
+(docs / 'OVERVIEW.md').write_text(overview, encoding='utf-8')
 shutil.copytree(root / 'docs' / 'assets', docs / 'assets', dirs_exist_ok=True)
 with target.open('wb') as raw, gzip.GzipFile(filename='',mode='wb',fileobj=raw,mtime=0) as compressed, tarfile.open(fileobj=compressed,mode='w',format=tarfile.PAX_FORMAT) as archive:
     for path in sorted((root / "zabbix_vision").rglob("*")):

@@ -96,12 +96,12 @@ def validate_profile(raw):
 
 STREAMS = ("audit", "events", "problems", "hosts", "items", "triggers", "hostgroups",
            "templates", "proxies", "services", "sla", "maintenance", "alerts",
-           "history", "trends", "discovery", "autoregistration", "internal")
+           "history", "trends", "discovery", "autoregistration", "internal", "userparameters")
 INPUT_DEFAULTS = {
     "profile": "", "streams": "audit,events,problems,hosts", "interval": "60",
     "index": "main", "page_size": "1000", "lookback": "3600", "overlap": "120",
     "settle_delay": "10", "window": "3600", "item_ids": "", "history_types": "0,1,2,3,4",
-    "snapshot_limit": "100000", "disabled": "0",
+    "snapshot_limit": "100000", "disabled": "0", "userparameter_item_ids": "",
 }
 
 
@@ -124,6 +124,11 @@ def validate_input(raw):
             raise ConfigError("%s must be between %s and %s" % (key, low, high))
         p[key] = str(number)
     ids(p["item_ids"])
+    execution_ids = ids(p['userparameter_item_ids'])
+    if len(execution_ids) > 1000 or len(execution_ids) != len(set(execution_ids)):
+        raise ConfigError('Select at most 1000 unique UserParameter log item IDs')
+    if 'userparameters' in streams and not execution_ids:
+        raise ConfigError('UserParameter collection requires userparameter_item_ids')
     if set(streams) & {"history", "trends"} and not ids(p["item_ids"]):
         raise ConfigError("History and trends require an explicit item_ids scope")
     types = p["history_types"].split(",")

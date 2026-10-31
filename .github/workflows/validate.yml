@@ -23,4 +23,4 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: zabbix-vision-${{ matrix.python }}
-          path: dist/zabbix_vision-1.0.0.tar.gz*
+          path: dist/zabbix_vision-*.tar.gz*

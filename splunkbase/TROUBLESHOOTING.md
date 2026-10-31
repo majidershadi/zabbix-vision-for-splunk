@@ -58,3 +58,14 @@ Use a maximum age greater than the longest intended input interval plus processi
 Include app/Splunk/Zabbix versions, deployment topology, affected stream, selected time range, sanitized error, last successful collection time, expected behavior and a small redacted example. State whether raw searches work and whether an old prototype is still installed. Report through [GitHub Issues](https://github.com/majidershadi/zabbix-vision-for-splunk/issues).
 
 Never attach API tokens, passwords, `passwords.conf`, `splunk.secret`, private keys, session keys, Authorization headers or unredacted customer audit logs. For suspected vulnerabilities, follow the repository's [security policy](https://github.com/majidershadi/zabbix-vision-for-splunk/blob/main/SECURITY.md).
+
+## UserParameter execution evidence (1.1.0)
+
+- **No execution records:** install the wrapper or compatible producer first. Numeric item results alone are insufficient. Confirm local JSON lines, active Zabbix log-item history, then the scoped Splunk input, in that order.
+- **Wrapper fails before running:** verify Python/executable paths, root or service-user ownership of the regular configuration file, no group/world write permission, and a service-owned writable log. A copied file can retain the wrong numeric owner. Check the administrator-controlled parent directories too.
+- **Collector rejects item IDs:** select the execution log item's ID, information type Log or Text, with token access to `item.get` and `history.get`. Do not select the numeric check-result ID.
+- **Invalid records:** use the versioned JSON schema. Duplicated JSON fields, oversized records, invalid identifiers or contradictory status/exit code are rejected without retaining the payload.
+- **Start-only rows:** check selected time range, collection lag, Zabbix retention, wrapper timeout and process interruption. Start-only does not prove that a command is still running.
+- **New model fields missing:** rebuild/reconfigure an existing accelerated Security model summary, then rerun the search. Acceleration is off by default.
+
+Full configuration and verification: [UserParameter API guide](https://github.com/majidershadi/zabbix-vision-for-splunk/blob/main/docs/USERPARAMETER_API.md).

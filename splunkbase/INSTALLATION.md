@@ -19,8 +19,8 @@
 
 ## Install the package
 
-1. Download `zabbix_vision-1.0.0.tar.gz` and its SHA-256 file from the [release](https://github.com/majidershadi/zabbix-vision-for-splunk/releases/tag/v1.0.0).
-2. Verify SHA-256 against `872443da22ae6b37df4c34225364b004ed6674c3dc56b79b18c3befbd2ca7692`. On Linux, use `sha256sum -c zabbix_vision-1.0.0.tar.gz.sha256` in the download directory. On Windows, use `Get-FileHash .\zabbix_vision-1.0.0.tar.gz -Algorithm SHA256` and compare.
+1. Download `zabbix_vision-1.1.0.tar.gz` and its SHA-256 file from the [release](https://github.com/majidershadi/zabbix-vision-for-splunk/releases/tag/v1.1.0).
+2. Verify SHA-256 against the release's checksum file. On Linux, use `sha256sum -c zabbix_vision-1.1.0.tar.gz.sha256` in the download directory. On Windows, use `Get-FileHash .\zabbix_vision-1.1.0.tar.gz -Algorithm SHA256` and compare.
 3. Open **Apps → Manage Apps → Install app from file**, select the `.tar.gz`, install, then restart Splunk in your approved maintenance window. Do not install the GitHub source ZIP or the submission-kit ZIP.
 4. Open **Zabbix Vision for Splunk**. The app directory and URL namespace are `zabbix_vision`. A bookmark containing `zabbix_connect` points to the earlier private prototype.
 

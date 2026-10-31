@@ -1,6 +1,6 @@
-# Splunkbase submission materials — 1.0.0
+# Splunkbase submission materials — 1.1.0
 
-**Updated kit: 30 October 2026.** Start with [the upload checklist](splunkbase/START_HERE.md). The `splunkbase/` directory contains separate copy-ready Details, Installation, Release notes, Troubleshooting, Support/privacy and screenshot-caption files. Seven fresh PNG captures and 623 × 350 PNG previews are under `docs/screenshots/splunkbase/`; open `splunkbase/GALLERY.html` after extracting the dated kit to browse them. Prefer these refreshed screenshots over the older single capture described below. The application archive is unchanged.
+**Updated kit: 1 November 2026.** Start with [the upload checklist](splunkbase/START_HERE.md). The `splunkbase/` directory contains separate copy-ready Details, Installation, Release notes, Troubleshooting, Support/privacy and screenshot-caption files. Eight real PNG captures and 623 × 350 PNG previews are under `docs/screenshots/splunkbase/`; open `splunkbase/GALLERY.html` after extracting the dated kit to browse them. Prefer these refreshed screenshots over the older single capture described below. Version 1.1.0 adds opt-in UserParameter API-history collection; use its new archive and matching inspection report.
 
 Status: prepared for submission; marketplace approval and Cloud certification are not claimed. Run/review AppInspect on the exact upload archive and resolve or document its findings before submitting.
 
@@ -10,7 +10,7 @@ Status: prepared for submission; marketplace approval and Cloud certification ar
 | --- | --- |
 | App name | Zabbix Vision for Splunk |
 | App ID | zabbix_vision |
-| Version | 1.0.0 |
+| Version | 1.1.0 |
 | Release status | Beta |
 | Author | Majid Ershadi; use the owner's actual Splunk.com account username where required |
 | Content type | App |
@@ -24,7 +24,7 @@ Status: prepared for submission; marketplace approval and Cloud certification ar
 | Documentation | https://github.com/majidershadi/zabbix-vision-for-splunk#readme |
 | Support URL | https://github.com/majidershadi/zabbix-vision-for-splunk/issues |
 | Website | https://majidershadi.github.io/articles/zabbix-vision-for-splunk/ |
-| Download | GitHub v1.0.0 release / final zabbix_vision-1.0.0.tar.gz |
+| Download | GitHub v1.1.0 release / final zabbix_vision-1.1.0.tar.gz |
 | Icon | zabbix_vision/static/appIcon.png; high-resolution mark in docs/assets/ |
 | Navigation logo | zabbix_vision/static/appLogo.png and appLogo_2x.png |
 
@@ -36,7 +36,7 @@ Bring Zabbix operations, audit, authentication and agent command evidence into S
 
 Zabbix Vision for Splunk collects Zabbix API records and turns them into an operational and security investigation workspace. Connect multiple instances using API tokens, specify the actual frontend or API path, validate the connection and choose the streams appropriate to your environment.
 
-Six dashboards cover event activity, authentication and configuration changes, current infrastructure snapshots, scoped history/trends, script activity and collector health. Two custom data models support tstats searches and optional acceleration. Search fields retain a redacted structured source payload, stable replay identities and source version information.
+Seven dashboards cover event activity, authentication and configuration changes, current infrastructure snapshots, scoped history/trends, script activity and collector health. Two custom data models support tstats searches and optional acceleration. Search fields retain a redacted structured source payload, stable replay identities and source version information.
 
 Transport controls include CA/hostname verification by default, custom CA bundles, mutual TLS with an optional separately stored key passphrase, TLS minimums, bounded timeouts/read retries and an explicit HTTP CONNECT proxy. Tokens use Splunk's native credential store. Splunk owns the encryption format: new writes use $8$ on 10.6+ and $7$ on earlier releases. Live encryption testing used $7$ on 10.4.1; 10.6+ live validation is pending.
 
@@ -48,7 +48,7 @@ This independent project targets Splunk Enterprise. It is not endorsed by Zabbix
 
 ## Release notes
 
-Initial public release with 18 streams, six dashboards, two data models, native credential storage, certificate/mTLS controls, flexible API paths, version-aware authentication, bounded checkpointed collection and agent command evidence. Includes installation, configuration, architecture, search, troubleshooting and coverage guides. Read docs/RELEASE_1.0.0.md for tested versions and limitations.
+Initial public release with 19 streams, seven dashboards, two data models, native credential storage, certificate/mTLS controls, flexible API paths, version-aware authentication, bounded checkpointed collection and agent command evidence. Includes installation, configuration, architecture, search, troubleshooting and coverage guides. Read docs/RELEASE_1.1.0.md for tested versions and limitations.
 
 ## Privacy and data handling
 

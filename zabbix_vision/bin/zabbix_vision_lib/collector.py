@@ -7,6 +7,7 @@ import time
 from .client import APIError
 from .config import ids, validate_input
 from .normalize import normalize
+from .userparameter import normalize_execution
 
 
 class Overflow(APIError):
@@ -109,6 +110,9 @@ def timed_specs(stream, options, version):
         if 5 in types and version < (7, 0, 0):
             raise APIError("Binary history requires Zabbix 7.0+")
         return [("history.get", {"output": "extend", "history": t, "itemids": ids(options["item_ids"])}, {"value_type": t}) for t in types]
+    if stream == 'userparameters':
+        return [('history.get', {'output': 'extend', 'history': t,
+                 'itemids': ids(options['userparameter_item_ids'])}, {'value_type': t}) for t in (2, 4)]
     if stream == "trends":
         return [("trend.get", {"output": "extend", "itemids": ids(options["item_ids"])}, {})]
     return None
@@ -126,6 +130,19 @@ class Collector:
         o = self.options
         specs = timed_specs(stream, o, self.client.version)
         count = 0
+        metadata = {}
+        if stream == 'userparameters':
+            requested = set(ids(o['userparameter_item_ids']))
+            items = self.client.call('item.get', {'itemids': sorted(requested),
+                'output': ['itemid', 'hostid', 'value_type'], 'selectHosts': ['hostid', 'host'],
+                'limit': len(requested) + 1})
+            if not isinstance(items, list):
+                raise APIError('Expected UserParameter item metadata')
+            metadata = {str(item['itemid']): item for item in items}
+            if set(metadata) != requested or len(items) != len(requested):
+                raise APIError('UserParameter log items are missing or inaccessible; checkpoint retained')
+            if any(str(item.get('value_type')) not in ('2', '4') for item in items):
+                raise APIError('UserParameter execution items must use Log or Text history')
         if specs is None:
             method, params = snapshot_spec(stream, self.client.version)
             limit = int(o["snapshot_limit"])
@@ -160,7 +177,12 @@ class Collector:
         seen = dict(previous.get("seen", {})) if previous else {}
         for method, params, extra in specs:
             for row in bounded_window(self.client, method, params, start, until, int(o["page_size"])):
-                event = normalize(stream, dict(row, **extra), o["profile"], self.client.version_text, now)
+                if stream == 'userparameters':
+                    if str(row.get('itemid')) not in metadata:
+                        raise APIError('Unexpected UserParameter item in history response')
+                    event = normalize_execution(dict(row, **extra), o['profile'], self.client.version_text, now, metadata[str(row['itemid'])])
+                else:
+                    event = normalize(stream, dict(row, **extra), o["profile"], self.client.version_text, now)
                 uid = event["event_uid"]
                 # Re-index updates of mutable event/alert records within the overlap.
                 fingerprint = hashlib.sha256(json.dumps(row, sort_keys=True).encode()).hexdigest()

@@ -2,9 +2,22 @@
 
 The API connection is the easy part. The harder questions are whether a newer Zabbix release still accepts the token, whether an audit response was truncated, and whether the command on an agent is represented in the data you collected.
 
-I built Zabbix Vision for Splunk around those questions. It collects Zabbix operations and audit records, provides a place to search forwarded agent command logs, and exposes its own collection health. The initial public release is 1.0.0 beta.
+I built Zabbix Vision for Splunk around those questions. It collects Zabbix operations and audit records, provides a place to search forwarded agent command logs, and exposes its own collection health. The current public beta is 1.1.0.
 
-This article explains the decisions behind the app, the deployment path and the evidence behind its compatibility claims. The [source and installation guide](https://github.com/majidershadi/zabbix-vision-for-splunk) and [release package](https://github.com/majidershadi/zabbix-vision-for-splunk/releases/tag/v1.0.0) are on GitHub.
+This article explains the decisions behind the app, the deployment path and the evidence behind its compatibility claims. The [source and installation guide](https://github.com/majidershadi/zabbix-vision-for-splunk) and [release package](https://github.com/majidershadi/zabbix-vision-for-splunk/releases/tag/v1.1.0) are on GitHub.
+
+## UserParameter execution evidence in 1.1.0
+
+Version 1.1.0 passed **48 Linux tests** and **39 live dashboard/selector searches** on Splunk 10.4.1. The wrapper → Zabbix 7.4.16 log history → Splunk route produced matched start/end records in the lab.
+
+A UserParameter result is not a complete execution audit trail. Version 1.1.0 adds an explicit path: a Linux wrapper writes start/end JSON, an active Zabbix log item ingests it, and the new scoped `userparameters` stream retrieves Log/Text history through the API. No additional Splunk forwarder is required for this path.
+
+The wrapper uses fixed administrator-configured arguments, preserves the check's stdout/stderr, and records only identifiers, timing, status and exit code. It omits command arguments, output and environment. A start-log failure prevents the command from running; an end-log failure can occur after execution, so it must not trigger a blind retry. A bounded timeout stops the process group and records the result when possible.
+
+The seventh dashboard correlates each invocation's start and completion, shows duration and failure counts, and makes invalid records visible without copying their payloads. Missing completion means incomplete evidence; it does not establish that a process is still running. The Security data model includes a UserParameter object, with disabled-by-default searches for failures and missing completions.
+
+The first implementation supports Linux and fixed simple UserParameter keys. Flexible argument substitution and a Windows wrapper are not included. OS auditing or EDR is still needed for independent descendant-process coverage. Follow the [deployment guide](https://github.com/majidershadi/zabbix-vision-for-splunk/blob/main/docs/USERPARAMETER_API.md) to install the wrapper, create the separate log item and configure its numeric ID in Splunk.
+
 
 ## Start with the questions an operator asks
 
@@ -54,7 +67,7 @@ The last problem you observed is not necessarily the problem that exists now. A 
 
 Snapshots therefore include completion markers, even when they contain no rows. Inventory searches use the latest complete snapshot within the chosen time range. A failed collection does not produce a reassuring empty snapshot.
 
-There are eighteen streams in the release. The API coverage includes audit, trigger events, current problems, hosts, items, triggers, groups, templates, proxies, services, SLA definitions, maintenance, alert operations, discovery, autoregistration, internal events and explicitly scoped history/trends. SLA definitions do not claim to be calculated SLI percentages. Trends exclude the current incomplete hour.
+There are nineteen streams in the release. The API coverage includes audit, trigger events, current problems, hosts, items, triggers, groups, templates, proxies, services, SLA definitions, maintenance, alert operations, discovery, autoregistration, internal events explicitly scoped history/trends and opt-in UserParameter execution history. SLA definitions do not claim to be calculated SLI percentages. Trends exclude the current incomplete hour.
 
 Use separate input cadences. Low-change inventory can run every five or fifteen minutes, while events need a shorter interval. Metric collection requires item IDs so that enabling a stream does not accidentally ask for every history value in the estate.
 
@@ -93,7 +106,7 @@ One live test also exposed a less obvious leak path: Zabbix can include script o
 
 This is an original standard-library Python implementation integrated with Splunk's modular-input and persistent REST interfaces. A small existing Zabbix add-on was inspected for behavior, including its fixed prefix, body token and timestamp checkpoint. Its code is not bundled. The broader design grew around the compatibility and operational questions those choices raised.
 
-Core live testing used Splunk Enterprise 10.4.1 and disposable official Zabbix 6.0.49, 7.0.32 and 7.4.16 stacks. All sixteen nonmetric streams succeeded on each. Scoped history/trend calls and numeric history were exercised on 7.4. The suite contains 33 automated tests, and all 32 generated dashboard/selector searches dispatched successfully in Splunk.
+Core live testing used Splunk Enterprise 10.4.1 and disposable official Zabbix 6.0.49, 7.0.32 and 7.4.16 stacks. All sixteen nonmetric streams succeeded on each. Scoped history/trend calls and numeric history were exercised on 7.4. The original 1.0.0 suite passed 33 automated tests and 32 dashboard/selector searches.
 
 A harmless predefined script executed on a disposable agent through the app. Splunk recorded requested/completed audit entries and a matching agent command record. Temporary test capability changes were restored and execution was disabled after the test. The log import was a snapshot for acceptance testing, not a claim that a permanent Docker log pipeline was installed.
 
@@ -103,6 +116,6 @@ The public app ID is `zabbix_vision`, renamed from the private prototype for rel
 
 Start with one collector, a dedicated token and a few streams. Set the index macro, test the profile, inspect collector health and compare one known event with Zabbix. Add slower inventory and a small metric scope after that path works. Give audit collection its required permissions deliberately, and keep retention longer than the outage you intend to recover from.
 
-The [release](https://github.com/majidershadi/zabbix-vision-for-splunk/releases/tag/v1.0.0) contains the install archive and checksum. The [repository](https://github.com/majidershadi/zabbix-vision-for-splunk) includes configuration, search, architecture, troubleshooting and coverage guides, plus Splunkbase submission materials. This initial beta is intended for deployment-specific acceptance before wider use.
+The [release](https://github.com/majidershadi/zabbix-vision-for-splunk/releases/tag/v1.1.0) contains the install archive and checksum. The [repository](https://github.com/majidershadi/zabbix-vision-for-splunk) includes configuration, search, architecture, troubleshooting and coverage guides, plus Splunkbase submission materials. This initial beta is intended for deployment-specific acceptance before wider use.
 
 Related engineering work: [REST Profiler](https://majidershadi.github.io/articles/rest-profiler-1-1/), [VMware Vision](https://github.com/majidershadi/vmware-vision), and [building secure Splunk apps](https://majidershadi.github.io/articles/building-secure-splunk-apps/).

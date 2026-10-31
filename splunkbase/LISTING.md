@@ -18,11 +18,11 @@ Use the actual Zabbix frontend address: the site root, `/zabbix`, a custom neste
 
 Secrets are saved through Splunk's native credential service. Splunk manages encryption with `$7$` on older releases and `$8$` on 10.6+. The app does not implement its own cipher or display saved secrets. `$7$` was verified live on 10.4.1; live 10.6+ validation remains pending.
 
-### Eighteen collection streams
+### Nineteen collection streams
 
 Collect audit, trigger events, current problems, hosts, items, triggers, host groups, templates, proxies, services, SLA definitions, maintenance, alerts, explicitly scoped history, closed-hour trends, discovery, autoregistration and internal events. Choose streams and cadence per input, with independent profiles for different environments or privilege levels.
 
-### Six investigation dashboards
+### Seven investigation dashboards
 
 - **Operations overview:** event counts, severity, affected hosts and recent problems/recoveries.
 - **Audit & authentication:** logins, failed logins, configuration changes, source addresses and the audit trail.
@@ -45,7 +45,7 @@ An optional execution action can invoke predefined Zabbix scripts on allowlisted
 
 Per-stream atomic checkpoints, bounded time-window splitting, late-arrival overlap and explicit overflow failures help operators detect collection gaps. Delivery can replay after interruption; use `instance,event_uid` for deduplication. Run one active collector per scope and keep inventory and high-volume metrics on suitable separate inputs.
 
-Version 1.0.0 is a public beta for Linux Splunk Enterprise. Core integration was tested on Splunk 10.4.1 with Zabbix 6.0.49, 7.0.32 and 7.4.16. Other versions require acceptance testing. Splunk Cloud certification, cluster validation and large-scale performance guarantees are not claimed.
+Version 1.1.0 is a public beta for Linux Splunk Enterprise. Core integration was tested on Splunk 10.4.1 with Zabbix 6.0.49, 7.0.32 and 7.4.16. Other versions require acceptance testing. Splunk Cloud certification, cluster validation and large-scale performance guarantees are not claimed.
 
 This independent Apache-2.0 project includes installation, configuration, architecture, search, coverage and troubleshooting guides. It is not affiliated with or endorsed by Splunk or Zabbix.
 
@@ -57,8 +57,12 @@ This independent Apache-2.0 project includes installation, configuration, archit
 | Installation | https://github.com/majidershadi/zabbix-vision-for-splunk/blob/main/splunkbase/INSTALLATION.md |
 | Troubleshooting | https://github.com/majidershadi/zabbix-vision-for-splunk/blob/main/splunkbase/TROUBLESHOOTING.md |
 | Support | https://github.com/majidershadi/zabbix-vision-for-splunk/issues |
-| Release | https://github.com/majidershadi/zabbix-vision-for-splunk/releases/tag/v1.0.0 |
+| Release | https://github.com/majidershadi/zabbix-vision-for-splunk/releases/tag/v1.1.0 |
 | Website | https://majidershadi.github.io/articles/zabbix-vision-for-splunk/ |
 | License | Apache License 2.0 |
 | Price / support | Free; developer support, no SLA |
 | Suggested search keywords | Zabbix, monitoring, observability, audit, authentication, agent, API, TLS |
+
+## UserParameter execution evidence (new in 1.1.0)
+
+An optional Linux wrapper records fixed-command start/end evidence without arguments or output. Zabbix collects that log and Splunk retrieves it through scoped API history. The seventh dashboard correlates invocations, reports durations/failures and exposes incomplete or invalid evidence. Producer deployment and Zabbix log-item configuration are required; API polling alone cannot reconstruct unrecorded executions. Flexible argument substitution and a Windows wrapper are not included.

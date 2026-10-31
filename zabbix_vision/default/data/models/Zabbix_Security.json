@@ -255,6 +255,192 @@
       ],
       "calculations": [],
       "objectType": "event"
+    },
+    {
+      "objectName": "UserParameter",
+      "displayName": "UserParameter",
+      "parentName": "BaseEvent",
+      "lineage": [
+        "UserParameter"
+      ],
+      "fields": [
+        {
+          "fieldName": "instance",
+          "displayName": "Instance",
+          "type": "string",
+          "owner": "UserParameter",
+          "fieldSearch": "instance=*",
+          "required": false,
+          "multivalue": false,
+          "hidden": false,
+          "editable": true,
+          "comment": ""
+        },
+        {
+          "fieldName": "event_uid",
+          "displayName": "Event Uid",
+          "type": "string",
+          "owner": "UserParameter",
+          "fieldSearch": "event_uid=*",
+          "required": false,
+          "multivalue": false,
+          "hidden": false,
+          "editable": true,
+          "comment": ""
+        },
+        {
+          "fieldName": "dataset",
+          "displayName": "Dataset",
+          "type": "string",
+          "owner": "UserParameter",
+          "fieldSearch": "dataset=*",
+          "required": false,
+          "multivalue": false,
+          "hidden": false,
+          "editable": true,
+          "comment": ""
+        },
+        {
+          "fieldName": "status",
+          "displayName": "Status",
+          "type": "string",
+          "owner": "UserParameter",
+          "fieldSearch": "status=*",
+          "required": false,
+          "multivalue": false,
+          "hidden": false,
+          "editable": true,
+          "comment": ""
+        },
+        {
+          "fieldName": "dest",
+          "displayName": "Dest",
+          "type": "string",
+          "owner": "UserParameter",
+          "fieldSearch": "dest=*",
+          "required": false,
+          "multivalue": false,
+          "hidden": false,
+          "editable": true,
+          "comment": ""
+        },
+        {
+          "fieldName": "hostid",
+          "displayName": "Hostid",
+          "type": "string",
+          "owner": "UserParameter",
+          "fieldSearch": "hostid=*",
+          "required": false,
+          "multivalue": false,
+          "hidden": false,
+          "editable": true,
+          "comment": ""
+        },
+        {
+          "fieldName": "itemid",
+          "displayName": "Itemid",
+          "type": "string",
+          "owner": "UserParameter",
+          "fieldSearch": "itemid=*",
+          "required": false,
+          "multivalue": false,
+          "hidden": false,
+          "editable": true,
+          "comment": ""
+        },
+        {
+          "fieldName": "invocation_id",
+          "displayName": "Invocation Id",
+          "type": "string",
+          "owner": "UserParameter",
+          "fieldSearch": "invocation_id=*",
+          "required": false,
+          "multivalue": false,
+          "hidden": false,
+          "editable": true,
+          "comment": ""
+        },
+        {
+          "fieldName": "userparameter_key",
+          "displayName": "Userparameter Key",
+          "type": "string",
+          "owner": "UserParameter",
+          "fieldSearch": "userparameter_key=*",
+          "required": false,
+          "multivalue": false,
+          "hidden": false,
+          "editable": true,
+          "comment": ""
+        },
+        {
+          "fieldName": "command_id",
+          "displayName": "Command Id",
+          "type": "string",
+          "owner": "UserParameter",
+          "fieldSearch": "command_id=*",
+          "required": false,
+          "multivalue": false,
+          "hidden": false,
+          "editable": true,
+          "comment": ""
+        },
+        {
+          "fieldName": "phase",
+          "displayName": "Phase",
+          "type": "string",
+          "owner": "UserParameter",
+          "fieldSearch": "phase=*",
+          "required": false,
+          "multivalue": false,
+          "hidden": false,
+          "editable": true,
+          "comment": ""
+        },
+        {
+          "fieldName": "parse_status",
+          "displayName": "Parse Status",
+          "type": "string",
+          "owner": "UserParameter",
+          "fieldSearch": "parse_status=*",
+          "required": false,
+          "multivalue": false,
+          "hidden": false,
+          "editable": true,
+          "comment": ""
+        },
+        {
+          "fieldName": "duration_ms",
+          "displayName": "Duration Ms",
+          "type": "number",
+          "owner": "UserParameter",
+          "fieldSearch": "duration_ms=*",
+          "required": false,
+          "multivalue": false,
+          "hidden": false,
+          "editable": true,
+          "comment": ""
+        },
+        {
+          "fieldName": "exit_code",
+          "displayName": "Exit Code",
+          "type": "number",
+          "owner": "UserParameter",
+          "fieldSearch": "exit_code=*",
+          "required": false,
+          "multivalue": false,
+          "hidden": false,
+          "editable": true,
+          "comment": ""
+        }
+      ],
+      "constraints": [
+        {
+          "search": "`zabbix_index` sourcetype=zabbix:userparameter",
+          "owner": "UserParameter"
+        }
+      ],
+      "calculations": [],
+      "objectType": "event"
     }
   ]
 }

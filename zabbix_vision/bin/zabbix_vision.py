@@ -71,6 +71,9 @@ def main():
             client = Client(profile, store.secret(options["profile"]), store.secret(options["profile"], "key_password", optional=True))
             # Endpoint and collection scope form part of checkpoint identity; edits safely backfill.
             scope = json.dumps({k: options[k] for k in ("item_ids", "history_types")}, sort_keys=True)
+            # Preserve existing checkpoint identity when the new stream is unused.
+            if options.get('userparameter_item_ids'):
+                scope = json.dumps({k: options[k] for k in ('item_ids', 'history_types', 'userparameter_item_ids')}, sort_keys=True)
             state = State(directory, name + "|" + profile["url"] + "|" + scope)
             collector = Collector(client, options, state, lambda e: emit(dict(e, input_name=name), name, options["index"]))
             results = collector.run()

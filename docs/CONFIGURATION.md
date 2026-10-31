@@ -57,3 +57,7 @@ The collector recursively splits time windows and, for history, item scopes. If 
 Checkpoints live under `$SPLUNK_HOME/var/lib/splunk/modinputs/zabbix_vision`. Corrupt checkpoints fail explicitly. Restore from backup or deliberately create a new input for replay; avoid casually deleting state. Changing an endpoint/scope creates a separate checkpoint namespace. Retire old health checkpoints when retiring inputs so external monitoring does not keep reporting them stale.
 
 Updates outside the overlap require explicit reconciliation/backfill. Problems are also current-state snapshots. Trends exclude the current incomplete hour and may therefore show expected delay.
+
+## UserParameter execution log items (1.1.0)
+
+Use a separate input with `streams=userparameters` and `userparameter_item_ids` containing dedicated Log/Text execution-item IDs. Requires `item.get` and `history.get` access to every selected item. Up to 1000 unique IDs; numeric check-result items are rejected. Read [the deployment guide](USERPARAMETER_API.md) before enabling. Missing/inaccessible item metadata retains the checkpoint; malformed log values produce visible payload-free invalid records and do not block later valid records.

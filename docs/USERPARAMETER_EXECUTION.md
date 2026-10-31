@@ -1,5 +1,7 @@
 # Detecting UserParameter execution
 
+**Version 1.1.0 update:** the app now includes an optional wrapper → Zabbix log item → API → dedicated dashboard route. See [UserParameter execution through the API](USERPARAMETER_API.md). The guide below describes independent OS process auditing; its references to 1.0.0 are historical boundaries, not a statement that 1.1.0 lacks the new structured-log integration.
+
 **Use operating-system process telemetry for execution evidence.** Zabbix Vision 1.0.0 does not automatically collect Linux auditd or Windows Sysmon records, and its agent-command panel is not a UserParameter detector. The searches below run against separately forwarded OS telemetry. They are deployment examples, not a new certified runtime feature or an end-to-end lab acceptance result.
 
 Zabbix defines a UserParameter as a key mapped to a command; on UNIX it runs the command through `/bin/sh`. This means process telemetry can reveal the shell and its external children. A collected item definition or returned item value alone does not prove which local command executed. See [Zabbix User parameters](https://www.zabbix.com/documentation/current/en/manual/config/items/userparameters).
