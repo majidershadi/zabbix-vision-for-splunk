@@ -25,7 +25,7 @@ An infrastructure dashboard can tell you that a trigger fired. During an investi
 
 Those are related questions, but their evidence comes from different places. Trigger events are not configuration audit records. A remote-command alert operation is not a complete process tree. A token being used to call the API does not imply a fresh login event for each request.
 
-Zabbix Vision keeps those distinctions visible. Six dashboards cover operations, authentication/change audit, infrastructure snapshots, scoped metrics, script/agent activity and collector health. The goal is to make the available evidence easier to investigate without presenting missing evidence as certainty.
+Zabbix Vision keeps those distinctions visible. Seven dashboards cover operations, authentication/change audit, infrastructure snapshots, scoped metrics, script/agent activity, UserParameter executions and collector health. The goal is to make the available evidence easier to investigate without presenting missing evidence as certainty.
 
 ## A frontend path is configuration, not an assumption
 

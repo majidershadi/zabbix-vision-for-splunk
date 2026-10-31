@@ -39,7 +39,7 @@ Recent overlap catches late arrivals and changes to mutable records. Event ident
 
 Current-state data needs another rule. An empty successful problem snapshot should clear the picture of current problems. Completion markers make that result visible, instead of leaving the last historical problem on screen forever.
 
-## Six dashboards, with collection health in view
+## Seven dashboards, with collection health in view
 
 The release includes operations, audit/authentication, infrastructure inventory, metrics/trends, script/agent activity and collector health dashboards.
 
