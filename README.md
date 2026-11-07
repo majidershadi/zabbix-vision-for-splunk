@@ -4,9 +4,9 @@
 
 Zabbix Vision brings Zabbix operations, access and configuration audit, and agent command evidence into Splunk. It connects through API tokens, keeps credentials in native Splunk secure storage, and gives operators seven dashboards for investigating what happened and whether collection is healthy.
 
-**Current public beta: 1.1.0 · Apache-2.0 · Linux Splunk Enterprise · App ID `zabbix_vision`**
+**Current public beta: 1.1.1 · Apache-2.0 · Linux Splunk Enterprise · App ID `zabbix_vision`**
 
-[Download the install package](https://github.com/majidershadi/zabbix-vision-for-splunk/releases/tag/v1.1.0) · [Detailed engineering article](https://majidershadi.github.io/articles/zabbix-vision-for-splunk/) · [Report an issue](https://github.com/majidershadi/zabbix-vision-for-splunk/issues)
+[Download the install package](https://github.com/majidershadi/zabbix-vision-for-splunk/releases/tag/v1.1.1) · [Detailed engineering article](https://majidershadi.github.io/articles/zabbix-vision-for-splunk/) · [Report an issue](https://github.com/majidershadi/zabbix-vision-for-splunk/issues)
 
 ## Why this app exists
 
@@ -16,7 +16,7 @@ This app treats those cases as part of the integration: explicit endpoint and ce
 
 ## Get started
 
-1. Download `zabbix_vision-1.1.0.tar.gz` and verify its SHA-256. The source ZIP is not an install package.
+1. Download `zabbix_vision-1.1.1.tar.gz` and verify its SHA-256. The source ZIP is not an install package.
 2. Install on a Linux Splunk Enterprise search head or heavy forwarder, then restart Splunk. Universal forwarders cannot run the API collector.
 3. Open **Administration → Connections & collection** as an administrator. Save the actual frontend/API URL and a dedicated Zabbix API token, then test it.
 4. Create an input for `audit,events,problems,hosts,alerts`. Use a separate slower input for inventory and an explicitly scoped input for history/trends.
@@ -24,6 +24,10 @@ This app treats those cases as part of the integration: explicit endpoint and ce
 6. Deploy the [agent/log examples](zabbix_vision/examples) where host-side command evidence is required.
 
 Read the [installation guide](docs/INSTALLATION.md) for distributed placement, upgrades and the private-prototype migration.
+
+## Update checking
+
+Splunk’s built-in update checking is enabled through `[package] check_for_updates = true`. It checks Splunkbase for the matching app ID. Install available updates through your normal Splunk maintenance process.
 
 ## UserParameter execution support in 1.1.0
 
@@ -44,7 +48,7 @@ Collect structured execution logs through Zabbix API history using the opt-in `u
 | Metrics | Explicitly scoped history types 0–4, optional binary history type 5 on 7.0+, closed-hour trends |
 | Execution | Zabbix execute audit records, remote-command alert operations, agent/server log extraction, approved script execution with host/script allowlists and separate Splunk capability |
 | Reliability | Bounded time-window splitting, nanosecond-aware history IDs, late-arrival overlap, per-stream atomic checkpoints, bounded retries and response sizes, explicit overflow errors |
-| Dashboards | Operations, audit/authentication, infrastructure, metrics, scripts/agent activity, collector health; instance/time filters |
+| Dashboards | Operations, audit/authentication, infrastructure, metrics, scripts/agent activity, UserParameter executions, collector health; instance/time filters |
 | Search | Zabbix Operations and Security data models; `tstats` panels; optional acceleration; deterministic event IDs |
 | Monitoring | Collector health events, saved detection searches, Zabbix agent UserParameter health check |
 
@@ -60,10 +64,8 @@ Collect structured execution logs through Zabbix API history using the opt-in `u
 | [Troubleshooting](docs/TROUBLESHOOTING.md) | Common failures and safe diagnostic steps |
 | [Build and release](docs/BUILD.md) | Tests, packaging and AppInspect workflow |
 | [Validation evidence](docs/VALIDATION.md) | Actual tests and remaining acceptance gaps |
-| [Release notes](docs/RELEASE_1.1.0.md) | UserParameter feature release and upgrade notes |
-| [Splunkbase submission copy](SPLUNKBASE.md) | Descriptions, metadata, privacy and compatibility wording |
-| [Splunkbase publishing kit](splunkbase/START_HERE.md) | Copy-ready listing fields, installation, release notes, troubleshooting and upload checklist |
-| [Screenshot gallery and captions](splunkbase/SCREENSHOTS.md) | Eight real lab captures, PNG previews and publication context |
+| [Release notes](docs/RELEASE_1.1.1.md) | Current changes and upgrade notes |
+| [Dashboard screenshots](docs/SCREENSHOTS.md) | Real lab screens with capture context |
 | [UserParameter execution detection](docs/USERPARAMETER_API.md) | Wrapper deployment, Zabbix log items, API history and execution correlation |
 
 ## Compatibility and evidence

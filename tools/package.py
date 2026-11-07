@@ -18,13 +18,19 @@ for path in (root / 'docs').glob('*.md'):
 overview = (root / 'README.md').read_text(encoding='utf-8')
 overview = overview.replace('(docs/', '(').replace('src="docs/assets/', 'src="assets/')
 overview = overview.replace('(zabbix_vision/examples)', '(../examples)')
-overview = overview.replace('(splunkbase/', '(https://github.com/majidershadi/zabbix-vision-for-splunk/blob/main/splunkbase/')
-overview = overview.replace('(SPLUNKBASE.md)', '(https://github.com/majidershadi/zabbix-vision-for-splunk/blob/main/SPLUNKBASE.md)')
+overview = overview.replace('(SCREENSHOTS.md)', '(https://github.com/majidershadi/zabbix-vision-for-splunk/blob/main/docs/SCREENSHOTS.md)')
 (docs / 'OVERVIEW.md').write_text(overview, encoding='utf-8')
 shutil.copytree(root / 'docs' / 'assets', docs / 'assets', dirs_exist_ok=True)
 with target.open('wb') as raw, gzip.GzipFile(filename='',mode='wb',fileobj=raw,mtime=0) as compressed, tarfile.open(fileobj=compressed,mode='w',format=tarfile.PAX_FORMAT) as archive:
     for path in sorted((root / "zabbix_vision").rglob("*")):
         if not path.is_file() or "__pycache__" in path.parts or "local" in path.parts or path.suffix == ".pyc":
+            continue
+        # Include generated guide files only while they have a source document.
+        if path.parent == docs and path.suffix == '.md' and path.name != 'OVERVIEW.md':
+            if not (root / 'docs' / path.name).is_file():
+                continue
+        # Screenshots are browsed in the repository, outside the install archive.
+        if path == docs / 'SCREENSHOTS.md':
             continue
         info = archive.gettarinfo(str(path), arcname=str(path.relative_to(root)).replace("\\", "/"))
         info.uid = info.gid = 0

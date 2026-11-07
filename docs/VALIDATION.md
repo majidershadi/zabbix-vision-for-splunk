@@ -44,16 +44,6 @@ The GitHub release includes the exact install archive and checksum. Review the a
 
 For complete process and access coverage, use the additional sources in [COVERAGE.md](COVERAGE.md).
 
-## Publishing-kit checks — 30 October 2026
-
-The private prototype lacked its `static/` icon assets. The six assets from the public release were installed there, and the browser reported a loaded 36-pixel icon. The public `zabbix_vision` icon was separately confirmed loaded. No runtime package change was needed.
-
-Seven current-app screenshots were captured after the icon checks. The disposable Zabbix 7.4 stack had stopped; restarting its existing database, server, frontend and agent restored the saved connection test (7.4.16, hosts and audit accessible). Indexed latest status for the public input showed success for its connection and all 16 selected nonmetric streams, with backfill lag still visible. The operations screenshot predates recovery; each image's context is recorded in the publishing kit.
-
-Lab SSH/Splunk Web subsequently became unreachable during final kit work. No later live refresh or UserParameter/auditd/Sysmon end-to-end test is claimed. The UserParameter guide supplies source-referenced collection/search examples and explicit acceptance steps; it does not change the 1.0.0 runtime.
-
-The dated kit preserves the original install archive, includes a per-file SHA-256 manifest, and supplies full PNG captures plus exact 623 × 350 PNG previews. Local archive integrity, manifest hashes, new documentation/gallery links, image dimensions and app configuration syntax were checked. This media/documentation refresh does not change the existing AppInspect result or confer marketplace approval.
-
 ## UserParameter release 1.1.0 — 1 November 2026
 
 The extended suite passed all **48 tests on Linux Python 3.10**, with no skips, including four real TLS handshakes and six wrapper process tests. Coverage includes fixed-command output preservation, nonzero exit, timeout, interruption, unsafe configuration/log rejection, parser payload omission, invalid-record handling, metadata scope validation and checkpoint replay. Windows local checks passed with Linux-only and unavailable-TLS tests skipped; that is not Windows wrapper support.
@@ -64,4 +54,8 @@ The disposable stack and Splunk had stopped during an interruption. They were re
 
 The optional wrapper was exercised under Linux and in the disposable Alpine-based agent container with Python 3.14. No independent auditd/Sysmon end-to-end capture, Windows wrapper, flexible argument support, distributed failover or performance benchmark is claimed. See APPINSPECT.md and the matching release report for inspection findings.
 
-The new 1.1.0 screenshot was captured on 1 November in Asia/Tehran; the lab UI displays UTC timestamps on 31 October. It shows 58 successful correlated invocations and zero rejected records in its selected range. The seven earlier screenshots retain their 1.0.0 context in the gallery captions. After backfill, the latest three execution-stream polls reported success with a 10-second lag (the configured settling delay).
+The new 1.1.0 screenshot was captured on 1 November in Asia/Tehran; the lab UI displays UTC timestamps on 31 October. It shows 58 successful correlated invocations and zero rejected records in its selected range. The seven earlier screenshots retain their 1.0.0 context in SCREENSHOTS.md. After backfill, the latest three execution-stream polls reported success with a 10-second lag (the configured settling delay).
+
+## Release 1.1.1 — 7 November 2026
+
+Package metadata, guide links and archive contents were checked. The archive contains `check_for_updates = true` and matching 1.1.1 version metadata. Local AppInspect 4.4.0 reported zero errors/failures and 12 warnings, including its private-app warning for enabled update checks; see APPINSPECT.md. Collection code and dashboard searches are unchanged from the 1.1.0 acceptance run above.

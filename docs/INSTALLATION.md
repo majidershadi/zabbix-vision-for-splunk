@@ -8,16 +8,16 @@ The live acceptance environment is Splunk Enterprise 10.4.1. The implementation 
 
 ## Install
 
-1. Download `zabbix_vision-1.1.0.tar.gz` and its SHA-256 file from [GitHub Releases](https://github.com/majidershadi/zabbix-vision-for-splunk/releases/tag/v1.1.0).
+1. Download `zabbix_vision-1.1.1.tar.gz` and its SHA-256 file from [GitHub Releases](https://github.com/majidershadi/zabbix-vision-for-splunk/releases/tag/v1.1.0).
 2. Verify the checksum. The GitHub source ZIP is not the install package.
-3. In Splunk, use **Apps → Manage Apps → Install app from file**. Select the archive and restart Splunk.
+3. In Splunk, use **Apps â†’ Manage Apps â†’ Install app from file**. Select the archive and restart Splunk.
 4. Create your destination index, grant the appropriate search roles access, and set the `zabbix_index` macro in `local/macros.conf`. The default is `index=main`.
-5. Open **Zabbix Vision for Splunk → Administration → Connections & collection** as an administrator.
+5. Open **Zabbix Vision for Splunk â†’ Administration â†’ Connections & collection** as an administrator.
 6. Save a profile with its frontend URL and API token, then select **Test saved connection**.
 7. Create an input. Start with `audit,events,problems,hosts,alerts`, a 60-second interval and an initial lookback matching your retention.
 8. Open Collector health. Check each selected stream and its lag, then verify a known event against the original Zabbix record.
 
-For production, keep low-change inventory in a separate 300–900-second input. History/trends need a separate input with explicit item IDs. Input names are checkpoint identities; changing a name starts a new backfill.
+For production, keep low-change inventory in a separate 300â€“900-second input. History/trends need a separate input with explicit item IDs. Input names are checkpoint identities; changing a name starts a new backfill.
 
 ## Index configuration
 

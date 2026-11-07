@@ -1,8 +1,8 @@
 # Local AppInspect review
 
-Version 1.1.0 was inspected in precert mode with Splunk AppInspect 4.4.0 on Windows. The completed run reported **0 errors, 0 failures, 0 future failures**. The release includes the report for the final archive.
+Version 1.1.1 was inspected in precert mode with Splunk AppInspect 4.4.0 on Windows. The completed run reported **0 errors, 0 failures, 0 future failures**. The release includes the report for the final archive.
 
-Eleven warning checks remain. They cover Windows-unavailable binary architecture/symlink checks, a SplunkJS informational check, Python-script inventory guidance for old Splunk versions, the presence of a modular input, indexer/Cloud configuration distribution, custom configuration replication, Cloud sc_admin role access data-model disk usage and the optional wrapper's subprocess use.
+Twelve warning checks remain. They cover Windows-unavailable binary architecture/symlink checks, a SplunkJS informational check, Python-script inventory guidance for old Splunk versions, the presence of a modular input, indexer/Cloud configuration distribution, custom configuration replication, Cloud sc_admin role access, data-model disk usage and the optional wrapper's subprocess use.
 
 This app targets Linux Splunk Enterprise. There are no bundled native binaries or symlinks. Cloud, Victoria and search-head-cluster placement are not certified; the deployment guide requires one active collector per scope and explains how to place parsing/search knowledge. Metadata intentionally restricts setup and credentials to Enterprise admin. Data-model acceleration is off and summary-storage decisions are documented.
 
@@ -11,3 +11,5 @@ The trusted-library metadata refresh failed during the local run, so the tool us
 The wrapper is an opt-in Linux agent example, not an automatically executed Splunk command. It uses fixed administrator-configured argv with shell=False and a bounded timeout. Its subprocess warning requires review in that deployment context.
 
 Release fixes included explicit 3.9/3.13 runtime declarations, app ID/version metadata, a reload trigger for the custom connection config and first-run setup state. Saving the first profile marks the app configured. Both python.version (legacy compatibility) and python.required (newer runtime selection) are provided where the extension supports them.
+
+The additional 1.1.1 warning is `check_for_updates_disabled`: the local inspection profile applies a private-app rule to `check_for_updates = true`. This app is intended for public Splunkbase distribution, so native marketplace update checking remains enabled. The setting only controls update discovery.

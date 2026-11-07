@@ -4,7 +4,7 @@
     "title": "Zabbix Vision for Splunk",
     "id": {
       "name": "zabbix_vision",
-      "version": "1.1.0"
+      "version": "1.1.1"
     },
     "author": [
       {
@@ -16,10 +16,10 @@
       "name": "Apache License 2.0",
       "text": "LICENSE"
     },
-    "releaseDate": "2026-11-01",
+    "releaseDate": "2026-11-07",
     "releaseNotes": {
-      "name": "1.1.0 release notes",
-      "text": "README/RELEASE_1.1.0.md"
+      "name": "1.1.1 release notes",
+      "text": "README/RELEASE_1.1.1.md"
     },
     "classification": {
       "developmentStatus": "Beta"
