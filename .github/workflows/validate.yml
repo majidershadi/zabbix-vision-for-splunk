@@ -6,7 +6,8 @@ permissions:
   contents: read
 jobs:
   validate:
-    runs-on: ubuntu-latest
+    # Ubuntu 24.04 has hosted Python builds for both supported versions.
+    runs-on: ubuntu-24.04
     strategy:
       matrix:
         python: ['3.9', '3.13']
