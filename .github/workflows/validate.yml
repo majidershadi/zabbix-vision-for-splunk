@@ -18,6 +18,7 @@ jobs:
       - run: python -m pip install -r requirements-dev.txt
       - run: python tools/build_assets.py
       - run: python -m unittest discover -s tests -v
+      - run: node tests/test_setup_ui.js
       - run: python tools/check_package.py
       - run: python tools/package.py
       - uses: actions/upload-artifact@v4

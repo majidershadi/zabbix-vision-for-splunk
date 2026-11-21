@@ -31,7 +31,7 @@ class Store:
         if missing_ok and status == 404:
             return None
         if status >= 400:
-            raise StoreError("Splunk management request rejected (HTTP %s); check capabilities" % status)
+            raise StoreError("Splunk management API returned HTTP %s." % status)
         try:
             return json.loads(body)
         except (ValueError, TypeError):

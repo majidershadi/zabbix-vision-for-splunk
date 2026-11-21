@@ -4,9 +4,9 @@
 
 Zabbix Vision brings Zabbix operations, access and configuration audit, and agent command evidence into Splunk. It connects through API tokens, keeps credentials in native Splunk secure storage, and gives operators seven dashboards for investigating what happened and whether collection is healthy.
 
-**Current public beta: 1.1.1 · Apache-2.0 · Linux Splunk Enterprise · App ID `zabbix_vision`**
+**Current public beta: 1.1.2 · Apache-2.0 · Linux Splunk Enterprise · App ID `zabbix_vision`**
 
-[Download the install package](https://github.com/majidershadi/zabbix-vision-for-splunk/releases/tag/v1.1.1) · [Detailed engineering article](https://majidershadi.github.io/articles/zabbix-vision-for-splunk/) · [Report an issue](https://github.com/majidershadi/zabbix-vision-for-splunk/issues)
+[Download the install package](https://github.com/majidershadi/zabbix-vision-for-splunk/releases/tag/v1.1.2) · [Detailed engineering article](https://majidershadi.github.io/articles/zabbix-vision-for-splunk/) · [Report an issue](https://github.com/majidershadi/zabbix-vision-for-splunk/issues)
 
 ## Why this app exists
 
@@ -16,7 +16,7 @@ This app treats those cases as part of the integration: explicit endpoint and ce
 
 ## Get started
 
-1. Download `zabbix_vision-1.1.1.tar.gz` and verify its SHA-256. The source ZIP is not an install package.
+1. Download `zabbix_vision-1.1.2.tar.gz` and verify its SHA-256. The source ZIP is not an install package.
 2. Install on a Linux Splunk Enterprise search head or heavy forwarder, then restart Splunk. Universal forwarders cannot run the API collector.
 3. Open **Administration → Connections & collection** as an administrator. Save the actual frontend/API URL and a dedicated Zabbix API token, then test it.
 4. Create an input for `audit,events,problems,hosts,alerts`. Use a separate slower input for inventory and an explicitly scoped input for history/trends.
@@ -64,7 +64,7 @@ Collect structured execution logs through Zabbix API history using the opt-in `u
 | [Troubleshooting](docs/TROUBLESHOOTING.md) | Common failures and safe diagnostic steps |
 | [Build and release](docs/BUILD.md) | Tests, packaging and AppInspect workflow |
 | [Validation evidence](docs/VALIDATION.md) | Actual tests and remaining acceptance gaps |
-| [Release notes](docs/RELEASE_1.1.1.md) | Current changes and upgrade notes |
+| [Release notes](docs/RELEASE_1.1.2.md) | Current changes and upgrade notes |
 | [Dashboard screenshots](docs/SCREENSHOTS.md) | Real lab screens with capture context |
 | [UserParameter execution detection](docs/USERPARAMETER_API.md) | Wrapper deployment, Zabbix log items, API history and execution correlation |
 

@@ -57,6 +57,64 @@ class ManagerTests(unittest.TestCase):
         return zabbix_vision_manager.Manager().handle(json.dumps(req))
     def test_no_session_is_rejected(self):
         self.assertEqual(self.invoke({},False)['status'],401)
+    def test_first_save_requires_a_token(self):
+        with patch.object(FakeStore, 'secret', return_value=None):
+            result = self.invoke({'action': 'save', 'name': 'prod',
+                                  'settings': {'url': 'https://zabbix.test'}})
+        self.assertEqual(result['status'], 400)
+        self.assertEqual(json.loads(result['payload'])['error'], 'Enter an API token for a new connection')
+
+    def test_first_save_reports_rejected_setup_update_as_warning(self):
+        from zabbix_vision_lib.splunk_store import ROOT, Store
+
+        def request(path, **kwargs):
+            method = kwargs['method']
+            calls.append((method, path, kwargs['postargs']))
+            if path == '/services/authentication/current-context':
+                return response(200, {'username': 'admin', 'capabilities': ['admin_all_objects']})
+            if method == 'GET' and path.startswith(ROOT + '/storage/passwords/'):
+                if not any(method == 'POST' and endpoint == ROOT + '/storage/passwords'
+                           for method, endpoint, data in calls):
+                    return response(404)
+                return response(200, {'encr_password': '$7$encrypted', 'clear_password': 'fixture-token'})
+            if path == '/services/server/info':
+                return response(200, {'version': '10.4.1'})
+            if method == 'GET' and path.startswith(ROOT + '/configs/conf-zabbix_vision_connections/'):
+                return response(404)
+            if method == 'POST' and path == '/services/apps/local/zabbix_vision':
+                return response(400, {'message': 'upstream marker must not be exposed'})
+            return response(200)
+
+        def response(status, content=None):
+            return {'status': status}, json.dumps({'entry': [{'content': content or {}}]})
+
+        calls = []
+        with patch.object(zabbix_vision_manager, 'Store', side_effect=lambda token: Store(token, request)):
+            result = self.invoke({'action': 'save', 'name': 'prod', 'token': 'fixture-token',
+                                  'settings': {'url': 'https://zabbix.test'}})
+        body = json.loads(result['payload'])
+        self.assertEqual(result['status'], 200)
+        self.assertEqual(body['saved'], 'prod')
+        self.assertIn('HTTP 400', body['warning'])
+        self.assertNotIn('upstream marker', result['payload'])
+        self.assertNotIn('fixture-token', result['payload'])
+        posts = [endpoint for method, endpoint, data in calls if method == 'POST']
+        self.assertEqual(posts, [ROOT + '/storage/passwords', ROOT + '/configs/conf-zabbix_vision_connections',
+                                 ROOT + '/configs/conf-app/install', '/services/apps/local/zabbix_vision'])
+
+    def test_storage_rejection_remains_a_save_error(self):
+        from zabbix_vision_lib.splunk_store import StoreError
+
+        with patch.object(FakeStore, 'save_secret', create=True,
+                          side_effect=StoreError('Splunk management API returned HTTP 400.')):
+            result = self.invoke({'action': 'save', 'name': 'prod', 'token': 'fixture-token',
+                                  'settings': {'url': 'https://zabbix.test'}})
+        self.assertEqual(result['status'], 400)
+        body = json.loads(result['payload'])
+        self.assertEqual(body['source'], 'zabbix_vision')
+        self.assertIn('Save the API token failed', body['error'])
+        self.assertEqual(FakeStore.calls, [])
+
     def test_input_uses_enable_endpoint(self):
         result=self.invoke({'action':'input','name':'prod','settings':{'profile':'prod'}})
         self.assertEqual(result['status'],200)

@@ -27,7 +27,7 @@ Run a real profile/input against each supported Zabbix generation, inspect strea
 Install Splunk AppInspect in its own supported validation environment and run it against the exact final archive:
 
 ```bash
-splunk-appinspect inspect dist/zabbix_vision-1.1.1.tar.gz --mode precert --output-file dist/appinspect-1.1.1.json
+splunk-appinspect inspect dist/zabbix_vision-1.1.2.tar.gz --mode precert --output-file dist/appinspect-1.1.2.json
 ```
 
 Review failures, errors, warnings and manual checks. Do not convert a local result into a claim of Splunkbase approval or Splunk Cloud certification. Marketplace review is performed separately by Splunk.

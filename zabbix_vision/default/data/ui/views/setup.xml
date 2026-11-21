@@ -8,7 +8,7 @@
       <div class="zbx-grid">
         <div><label for="profile_name">Profile name</label><input id="profile_name" placeholder="production"/><small>Stable instance name, using letters, digits, underscores or hyphens.</small></div>
         <div><label for="url">Frontend or API URL</label><input id="url" placeholder="https://monitoring.example.com/custom/zabbix"/><small>Root, /zabbix, any custom prefix, or the full api_jsonrpc.php URL.</small></div>
-        <div><label for="token">API token</label><input id="token" type="password" autocomplete="new-password"/><small>Leave empty when editing to keep the stored token. Native $8$ encryption on Splunk 10.6+, $7$ on earlier releases.</small></div>
+        <div><label for="token">API token</label><input id="token" type="password" autocomplete="new-password"/><small>Required for a new connection. Leave empty when editing to keep the stored token. Native $8$ encryption on Splunk 10.6+, $7$ on earlier releases.</small></div>
         <div><label for="auth_mode">API authentication</label><select id="auth_mode"><option value="auto">Automatic by Zabbix version</option><option value="bearer">Bearer header</option><option value="body">Legacy JSON body (before 7.2 only)</option></select></div>
       </div>
       <h3>02 / TLS &amp; transport</h3>

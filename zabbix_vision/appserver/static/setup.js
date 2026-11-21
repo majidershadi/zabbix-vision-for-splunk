@@ -6,24 +6,67 @@ require(['jquery', 'splunkjs/mvc', 'splunkjs/mvc/simplexml/ready!'], function ($
     var profiles = [];
     function values(keys) { var out = {}; keys.forEach(function(k) { out[k] = $('#' + k).val(); }); return out; }
     function show(target, data, error) { $(target).text(typeof data === 'string' ? data : JSON.stringify(data,null,2)).toggleClass('error', !!error); }
+    function jsonObject(data) {
+        if (typeof data === 'string') {
+            try { data = JSON.parse(data); } catch (e) { return null; }
+        }
+        return data && typeof data === 'object' ? data : null;
+    }
+    function appError(data) {
+        data = jsonObject(data);
+        if (data && data.source === 'zabbix_vision' && typeof data.error === 'string') {
+            return data.error;
+        }
+        return null;
+    }
+    function requestError(err) {
+        var data = jsonObject(err.data || err.responseJSON || err.responseText);
+        var message = appError(data);
+        // Some Splunk Web versions wrap the handler's reply in a REST message.
+        if (!message && data && Array.isArray(data.messages)) {
+            data.messages.some(function(item) {
+                message = item && appError(item.text);
+                return !!message;
+            });
+        }
+        if (message) { return message; }
+        var status = Number(err.status || (err.response && err.response.status));
+        if (status === 401) { return 'Your Splunk session has expired. Sign in again and reload this page.'; }
+        if (status === 403) { return 'Splunk denied this setup request (HTTP 403). Use an administrator session.'; }
+        if (status === 404) { return 'The setup endpoint was not found (HTTP 404). Verify the app is enabled and restart Splunk after installation.'; }
+        if (status >= 400 && status <= 599) {
+            return 'Splunk returned HTTP ' + status + ' without a setup error message. Reload this page and check splunkd.log or web_service.log if the problem persists.';
+        }
+        return 'Splunk did not return a setup response. Reload this page and try again.';
+    }
     function call(payload, target, after) {
         $('#zbx-setup button').prop('disabled', true);
         show(target, 'Working…', false);
-        service.request('zabbix_vision_manager', 'POST', null, null, JSON.stringify(payload), {'Content-Type':'application/json'}, function(err, response) {
+        service.request('zabbix_vision_manager', 'POST', {output_mode: 'json'}, null, JSON.stringify(payload), {'Content-Type':'application/json'}, function(err, response) {
             $('#zbx-setup button').prop('disabled', false);
             $('#token, #key_password').val('');
-            var data = response && response.data;
-            show(target, data || (err ? 'Request failed. Check your permissions and Splunk service status.' : 'Completed.'), !!err);
-            if (!err && after) { after(); }
+            if (err) { show(target, requestError(err), true); return; }
+            var data = jsonObject(response && response.data);
+            if (!data || !Object.keys(data).length) {
+                show(target, 'Splunk returned an unexpected setup response. Reload this page and check Existing connection before retrying.', true);
+                return;
+            }
+            show(target, data, false);
+            if (after) { after(); }
         });
     }
     function refresh() {
         service.get('zabbix_vision_manager', {}, function(err, response) {
-            if (err) { show('#connection-result', 'Admin access is required to manage connections.', true); return; }
-            profiles = response.data.profiles || [];
+            if (err) { show('#connection-result', requestError(err), true); return; }
+            var data = jsonObject(response && response.data);
+            if (!data || !Array.isArray(data.profiles) || !Array.isArray(data.streams)) {
+                show('#connection-result', 'Splunk returned an unexpected connections list. Reload this page and try again.', true);
+                return;
+            }
+            profiles = data.profiles;
             $('#existing').empty().append($('<option>').val('').text('New connection'));
             profiles.forEach(function(p) { $('#existing').append($('<option>').val(p.name).text(p.name)); });
-            $('#supported-streams').text('Available: ' + response.data.streams.join(', '));
+            $('#supported-streams').text('Available: ' + data.streams.join(', '));
         });
     }
     $('#existing').on('change', function() {

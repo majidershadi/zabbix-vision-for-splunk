@@ -3,6 +3,8 @@
 | Symptom | Check and response |
 | --- | --- |
 | Icon missing / old app name | A `/zabbix_connect/` bookmark opens the private prototype. Open `/zabbix_vision/`. Icons belong in the app's `static/` directory with case-sensitive names; check read permissions and refresh browser/Splunk Web asset caches after repairing files. |
+| Save connection returns HTTP 400 | Reload Setup to refresh your Splunk Web session. Use a profile name with letters, digits, underscores or hyphens, an absolute Zabbix URL and a Zabbix API token for a new profile. For an intentional isolated HTTP lab, set **Allow unencrypted HTTP** to **Yes**. On 1.1.1, reopen Setup and check **Existing connection** before re-entering the token. A setup-completion error could follow a successful save. |
+| Connection saved with a setup warning | Select the profile under **Existing connection** and run **Test saved connection**. If the app still prompts for setup, give your Splunk administrator the sanitized warning and the time it occurred so they can check app configuration writes. |
 | Connection initialization failed | Check that Zabbix frontend/server/database services are running, endpoint/port reachability, saved profile and credential access. The generic message can also mean an unavailable endpoint. |
 | Old health error or duplicate rows | Check input name, last_seen and heartbeat age; retired inputs can leave historical status. Prototype/public collectors sharing a scope can duplicate records. Run one active collector per scope and retain indexed history. |
 | Connection version fails | Confirm frontend/API URL and custom prefix, outbound DNS/network, proxy and CA trust. Redirects are intentionally refused. |
@@ -32,6 +34,8 @@ Useful Splunk checks:
 $SPLUNK_HOME/bin/splunk btool check
 python3 $SPLUNK_HOME/etc/apps/zabbix_vision/bin/zabbix_health.py --checkpoint-dir $SPLUNK_HOME/var/lib/splunk/modinputs/zabbix_vision --max-age 900
 ```
+
+For a setup error, note the app and Splunk versions, the timestamp, and the response status and sanitized error from the browser's Network tab. Find the request named `zabbix_vision_manager` and inspect the **Response** tab. Splunk's `splunkd.log` and `web_service.log` can help identify where a request was rejected. The **Payload** tab contains the submitted token and may include a passphrase.
 
 Report issues with app/Splunk/Zabbix versions, stream, sanitized error, expected behavior and a minimal redacted record. Never attach tokens, passwords.conf, splunk.secret, client private keys, session keys or unredacted customer audit history.
 

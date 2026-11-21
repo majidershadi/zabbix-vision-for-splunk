@@ -39,25 +39,16 @@ class Manager(PersistentServerConnectionApplication):
                 return self.reply(200, {"profiles": store.profiles(), "streams": STREAMS})
             if request["method"] != "POST":
                 return self.reply(405, {"error": "Use GET or POST"})
-            body = json.loads(request.get("payload") or "{}")
+            try:
+                body = json.loads(request.get("payload") or "{}")
+            except (ValueError, TypeError):
+                return self.reply(400, {"error": "Invalid setup request. Reload the setup page and try again."})
+            if not isinstance(body, dict):
+                return self.reply(400, {"error": "Setup request must be a JSON object"})
             action = body.get("action")
             name = identifier(body.get("name", ""))
             if action == "save":
-                settings = validate_profile(body.get("settings", {}))
-                token = body.get("token")
-                cipher = None
-                # New profiles need a token; edits can retain the existing credential.
-                if token:
-                    cipher = store.save_secret(name, token)
-                else:
-                    store.secret(name)
-                if body.get("key_password"):
-                    store.save_secret(name, body["key_password"], "key_password")
-                store.save_profile(name, settings)
-                # Mark first-run setup complete only after a profile was saved.
-                store.call(ROOT + "/configs/conf-app/install", "POST", {"is_configured": "1"})
-                store.call("/services/apps/local/zabbix_vision", "POST", {"configured": "1"})
-                return self.reply(200, {"saved": name, "cipher": cipher})
+                return self.save_connection(store, name, body)
             if action == "input":
                 options = validate_input(body.get("settings", {}))
                 store.profile(options["profile"])
@@ -106,7 +97,39 @@ class Manager(PersistentServerConnectionApplication):
         except Exception:
             return self.reply(500, {"error": "Management operation failed; verify Splunk configuration and service permissions"})
 
+    def save_connection(self, store, name, body):
+        settings = body.get("settings", {})
+        if not isinstance(settings, dict):
+            return self.reply(400, {"error": "Connection settings must be a JSON object"})
+        settings = validate_profile(settings)
+        token = body.get("token")
+        cipher = None
+        stage = "Save the API token" if token else "Read the stored API token"
+        try:
+            if token:
+                cipher = store.save_secret(name, token)
+            elif store.secret(name, optional=True) is None:
+                return self.reply(400, {"error": "Enter an API token for a new connection"})
+            if body.get("key_password"):
+                stage = "Save the private-key passphrase"
+                store.save_secret(name, body["key_password"], "key_password")
+            stage = "Save the connection settings"
+            store.save_profile(name, settings)
+        except StoreError as exc:
+            return self.reply(400, {"error": f"{stage} failed. {exc}"})
+
+        result = {"saved": name, "cipher": cipher}
+        try:
+            store.call(ROOT + "/configs/conf-app/install", "POST", {"is_configured": "1"})
+            store.call("/services/apps/local/zabbix_vision", "POST", {"configured": "1"})
+        except StoreError as exc:
+            # The profile can already be used even if Splunk rejects the setup flag.
+            result["warning"] = f"Connection saved. Splunk could not finish marking app setup complete. {exc}"
+        return self.reply(200, result)
+
     @staticmethod
     def reply(status, data):
+        if status >= 400:
+            data = dict(data, source="zabbix_vision")
         return {"status": status, "payload": json.dumps(data),
                 "headers": {"Content-Type": "application/json", "Cache-Control": "no-store"}}
