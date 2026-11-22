@@ -1,5 +1,6 @@
 """Build an installable Splunk package containing only the application directory."""
 import hashlib
+from io import BytesIO
 import json
 import gzip
 import shutil
@@ -32,13 +33,21 @@ with target.open('wb') as raw, gzip.GzipFile(filename='',mode='wb',fileobj=raw,m
         # Screenshots are browsed in the repository, outside the install archive.
         if path == docs / 'SCREENSHOTS.md':
             continue
-        info = archive.gettarinfo(str(path), arcname=str(path.relative_to(root)).replace("\\", "/"))
+        archive_path = path.relative_to(root).as_posix()
+        info = archive.gettarinfo(str(path), arcname=archive_path)
         info.uid = info.gid = 0
         info.uname = info.gname = ""
-        info.mode = 0o755 if path.suffix == ".py" else 0o644
+        # Splunk launches the modular input. Libraries and examples use an interpreter.
+        info.mode = 0o755 if archive_path == "zabbix_vision/bin/zabbix_vision.py" else 0o644
         info.mtime = 0
-        with path.open("rb") as f:
-            archive.addfile(info, f)
+        if info.mode == 0o755:
+            # Keep the shebang usable on Linux when building from a Windows checkout.
+            content = path.read_bytes().replace(b"\r\n", b"\n")
+            info.size = len(content)
+            archive.addfile(info, BytesIO(content))
+        else:
+            with path.open("rb") as f:
+                archive.addfile(info, f)
 digest = hashlib.sha256(target.read_bytes()).hexdigest()
 target.with_suffix(target.suffix + ".sha256").write_text(digest + "  " + target.name + "\n")
 print(str(target))

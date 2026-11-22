@@ -8,8 +8,8 @@ python -m venv .venv
 python -m pip install -r requirements-dev.txt
 python tools/build_assets.py
 python -m unittest discover -s tests -v
-python tools/check_package.py
 python tools/package.py
+python tools/check_package.py --archive dist/zabbix_vision-1.1.3.tar.gz
 ```
 
 `build_assets.py` creates the seven dashboards and two data models. Edit that generator when changing generated searches. `build_brand.py` regenerates the PNG assets from the original geometric eye/pulse mark; its font lookup supports Windows Segoe UI and Linux DejaVu Sans. Brand generation requires Pillow and is unnecessary for routine packaging because the rendered assets are committed.
@@ -27,7 +27,7 @@ Run a real profile/input against each supported Zabbix generation, inspect strea
 Install Splunk AppInspect in its own supported validation environment and run it against the exact final archive:
 
 ```bash
-splunk-appinspect inspect dist/zabbix_vision-1.1.2.tar.gz --mode precert --output-file dist/appinspect-1.1.2.json
+splunk-appinspect inspect dist/zabbix_vision-1.1.3.tar.gz --mode precert --output-file dist/appinspect-1.1.3.json
 ```
 
 Review failures, errors, warnings and manual checks. Do not convert a local result into a claim of Splunkbase approval or Splunk Cloud certification. Marketplace review is performed separately by Splunk.
